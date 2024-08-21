@@ -46,27 +46,34 @@
     {:name :action/decline-booking}],
    :from :state/preauthorized,
    :to :state/expired}
+  {:name :transition/complete-start,
+   :at
+   {:fn/minus
+    [{:fn/timepoint [:time/booking-start]} {:fn/period ["P1D"]}]},
+   :from :state/accepted,
+   :to :state/complete-start}
   {:name :transition/complete,
    :at
-   {:fn/plus
-    [{:fn/timepoint [:time/booking-end]} {:fn/period ["P2D"]}]},
-   :from :state/accepted,
-   :to :state/delivered}
-  {:name :transition/operator-complete,
-   :actor :actor.role/operator,
-   :from :state/accepted,
-   :to :state/delivered}
+   {:fn/minus
+    [{:fn/timepoint [:time/booking-end]} {:fn/period ["P1D"]}]},
+   :from :state/complete-start,
+   :to :state/complete}
+  {:name :transition/review,
+  :at
+  {:fn/timepoint [:time/booking-end]}, 
+   :from :state/complete,
+   :to :state/review}
   {:name :transition/cancel,
    :actor :actor.role/operator,
    :actions
    [{:name :action/calculate-full-refund}
     {:name :action/cancel-booking}],
-   :from :state/accepted,
+   :from :state/complete-start,
    :to :state/cancelled}
   {:name :transition/review-1-by-provider,
    :actor :actor.role/provider,
    :actions [{:name :action/post-review-by-provider}],
-   :from :state/delivered,
+   :from :state/review,
    :to :state/reviewed-by-provider}
   {:name :transition/review-2-by-provider,
    :actor :actor.role/provider,
@@ -78,7 +85,7 @@
   {:name :transition/review-1-by-customer,
    :actor :actor.role/customer,
    :actions [{:name :action/post-review-by-customer}],
-   :from :state/delivered,
+   :from :state/review,
    :to :state/reviewed-by-customer}
   {:name :transition/review-2-by-customer,
    :actor :actor.role/customer,
@@ -92,7 +99,7 @@
    {:fn/plus
     [{:fn/timepoint [:time/booking-end]} {:fn/period ["P7D"]}]},
    :actions [],
-   :from :state/delivered,
+   :from :state/complete,
    :to :state/reviewed}
   {:name :transition/expire-provider-review-period,
    :at
@@ -109,16 +116,14 @@
    :from :state/reviewed-by-provider,
    :to :state/reviewed}],
  :notifications
-<<<<<<< HEAD
- [
-  {:name :notification/booking-new-request,
-   :on :transition/confirm-payment,
-=======
  [{:name :notification/booking-new-request,
    :on :transition/request-payment,
->>>>>>> 050252317be0d50b0c3f091b3e19daa30d16de14
    :to :actor.role/provider,
    :template :booking-new-request}
+  {:name :notification/booking-new-request-customer,
+   :on :transition/request-payment,
+   :to :actor.role/customer,
+   :template :booking-new-request-customer}
   {:name :notification/booking-accepted-request,
    :on :transition/accept,
    :to :actor.role/customer,
@@ -147,28 +152,28 @@
    :on :transition/expire,
    :to :actor.role/customer,
    :template :booking-expired-request}
-  {:name :notification/booking-money-paid,
+  {:name :notification/booking-reminder-customer,
+   :on :transition/complete-start,
+   :to :actor.role/customer,
+   :template :booking-reminder-customer}
+  {:name :notification/booking-reminder-provider,
+   :on :transition/complete-start,
+   :to :actor.role/provider,
+   :template :booking-reminder-provider}
+  {:name :notification/booking-reminder-end-provider,
    :on :transition/complete,
    :to :actor.role/provider,
-   :template :booking-money-paid}
-  {:name :notification/review-period-start-provider,
+   :template :booking-reminder-end-provider}
+  {:name :notification/booking-reminder-end-customer
    :on :transition/complete,
+   :to :actor.role/customer
+   :template :booking-reminder-end-customer}
+  {:name :notification/review-period-start-provider,
+   :on :transition/review,
    :to :actor.role/provider,
    :template :booking-review-by-provider-wanted}
   {:name :notification/review-period-start-customer,
-   :on :transition/complete,
-   :to :actor.role/customer,
-   :template :booking-review-by-customer-wanted}
-  {:name :notification/booking-money-paid-operator-complete,
-   :on :transition/operator-complete,
-   :to :actor.role/provider,
-   :template :booking-money-paid}
-  {:name :notification/review-period-start-provider-operator-complete,
-   :on :transition/operator-complete,
-   :to :actor.role/provider,
-   :template :booking-review-by-provider-wanted}
-  {:name :notification/review-period-start-customer-operator-complete,
-   :on :transition/operator-complete,
+   :on :transition/review,
    :to :actor.role/customer,
    :template :booking-review-by-customer-wanted}
   {:name :notification/review-by-provider-first,
@@ -187,11 +192,4 @@
    :on :transition/review-2-by-customer,
    :to :actor.role/provider,
    :template :booking-review-by-other-party-published}
-  {:name :notification/booking-reminder-customer
-   :on :transition/confirm-payment,
-   :to :actor.role/customer
-   :template :booking-reminder-customer
-   :at {:fn/minus
-        [{:fn/timepoint [:time/booking-start]}
-         {:fn/period ["P1D"]}]}}
   ]}

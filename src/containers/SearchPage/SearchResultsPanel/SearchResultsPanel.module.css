@@ -58,6 +58,27 @@
 
 .pagination {
   /* margin-top: auto; pushes pagination to the end of the page. */
-  margin-top: auto;
+  /* margin-top: auto;*/
   background-color: transparent;
+}
+
+/* Ine*/
+.stickyButton {
+  position: sticky;
+  top: 0;
+  background-color: #7cc9bc; /* Color de fondo del botón */
+  color: white; /* Color del texto del botón */
+  padding: 10px 15px; /* Relleno del botón */
+  border: none; /* Sin borde */
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 1000; /* Asegura que el botón esté sobre otros elementos */
+  width: 100%;
+}
+
+/* Agrega este estilo para el espacio entre el botón y la grilla de artículos */
+.listingCards {
+  margin-top: 20px; /* Ajusta el espacio según tus preferencias */
 }

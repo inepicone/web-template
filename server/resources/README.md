@@ -16,6 +16,7 @@ name of the marketplace is fetched through Marketplace SDK.
 
 ## Robots.txt
 
+
 [Robots.txt](https://developer.mozilla.org/en-US/docs/Glossary/Robots.txt) is a file which is
 usually placed in the root of any website. It decides whether crawlers are permitted or forbidden
 access to the website.

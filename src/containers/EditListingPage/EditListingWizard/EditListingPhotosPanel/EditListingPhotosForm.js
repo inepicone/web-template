@@ -176,6 +176,14 @@ export const EditListingPhotosFormComponent = props => {
         const imagesError = touched.images && errors?.images && errors.images[ARRAY_ERROR];
 
         const classes = classNames(css.root, className);
+        const handleCreateListingClick = () => {
+          console.log('PublicArticleBtn3'); // Log para verificar
+          if (typeof fbq !== 'undefined') {
+            fbq('track', 'PublicArticleBtn3');
+          } else {
+            console.error('Meta Pixel no está definido');
+          }
+        };
 
         return (
           <Form
@@ -253,11 +261,13 @@ export const EditListingPhotosFormComponent = props => {
             <p className={css.tip}>
               <FormattedMessage id="EditListingPhotosForm.addImagesTip" />
             </p>
-
+            <p style={{color: "var(--colorGrey300)"}}>
+            Si necesitás cambiar el tamaño de la imagen, podés usar plataformas que modifiquen la imagen (Ej.: “Convert my image”, "ResizeMyImage", etc.)</p>
             <PublishListingError error={publishListingError} />
             <ShowListingsError error={showListingsError} />
 
             <Button
+              onClick={handleCreateListingClick}
               className={css.submitButton}
               type="submit"
               inProgress={submitInProgress}

@@ -31,7 +31,6 @@ const SearchResultsPanel = props => {
 
   const cardRenderSizes = isMapVariant => {
     if (isMapVariant) {
-      // Panel width relative to the viewport
       const panelMediumWidth = 50;
       const panelLargeWidth = 62.5;
       return [
@@ -41,7 +40,6 @@ const SearchResultsPanel = props => {
         `${panelLargeWidth / 3}vw`,
       ].join(', ');
     } else {
-      // Panel width relative to the viewport
       const panelMediumWidth = 50;
       const panelLargeWidth = 62.5;
       return [
@@ -54,19 +52,60 @@ const SearchResultsPanel = props => {
     }
   };
 
+  const handleCardClick = listingId => {
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'ViewContent', { listing_id: listingId });
+    } else {
+      console.error('Meta Pixel no está definido');
+    }
+  };
+
+  const handleButtonClick = () => {
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'ContactTextArticlesGeneral');
+      setTimeout(() => {
+        window.open('https://wa.me/5492944232664', '_blank');
+      }, 300);
+    } else {
+      console.error('Meta Pixel no está definido');
+    }
+  };
   return (
     <div className={classes}>
+      <div className={classNames(css.stickyButtonContainer)}>
+        <button style={{position:'static'}}
+          className={classNames(css.stickyButton, css.whatsappButton)}
+          onClick={handleButtonClick}
+        >
+          Si no encontrás lo que necesitás, ¡escribinos por acá!
+        </button>
+      </div>
+
       <div className={isMapVariant ? css.listingCardsMapVariant : css.listingCards}>
         {listings.map(l => (
-          <ListingCard
-            className={css.listingCard}
+          <button
             key={l.id.uuid}
-            listing={l}
-            renderSizes={cardRenderSizes(isMapVariant)}
-            setActiveListing={setActiveListing}
-          />
+            onClick={() => handleCardClick(l.id.uuid)}
+            style={{ border: 'none', background: 'none', padding: 0, margin: 0, width: '100%' }}
+          >
+            <ListingCard
+              className={css.listingCard}
+              listing={l}
+              renderSizes={cardRenderSizes(isMapVariant)}
+              setActiveListing={setActiveListing}
+            />
+          </button>
         ))}
         {props.children}
+      </div>
+      {/* Botón debajo de todos los productos */}
+      <div className={classNames(css.stickyButtonContainer)}>
+        <button
+          className={classNames(css.stickyButton, css.whatsappButton)}
+          onClick={handleButtonClick}
+        >
+          Si no encontrás lo que necesitás, ¡escribinos por acá!
+        </button>
       </div>
       {paginationLinks}
     </div>

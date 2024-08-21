@@ -49,8 +49,9 @@ export const transitions = {
   CANCEL: 'transition/cancel',
 
   // The backend will mark the transaction completed.
+  COMPLETE_START: 'transition/complete-start',
   COMPLETE: 'transition/complete',
-  OPERATOR_COMPLETE: 'transition/operator-complete',
+  REVIEW: 'transition/review',
 
   // Reviews are given through transaction transitions. Review 1 can be
   // by provider or customer, and review 2 will be the other party of
@@ -120,7 +121,7 @@ export const graph = {
         [transitions.REQUEST_PAYMENT_AFTER_INQUIRY]: states.PREAUTHORIZED,
       },
     },
-    
+
     [states.PREAUTHORIZED]: {
       on: {
         [transitions.DECLINE]: states.DECLINED,
@@ -130,6 +131,38 @@ export const graph = {
         [transitions.OPERATOR_ACCEPT]: states.ACCEPTED,
       },
     },
+
+    [states.DECLINED]: {},
+    [states.EXPIRED]: {},
+    [states.ACCEPTED]: {
+      on: {
+        [transitions.CANCEL]: states.CANCELED,
+        [transitions.COMPLETE_START]: states.ACCEPTED,
+        [transitions.COMPLETE]: states.ACCEPTED,
+        [transitions.REVIEW]: states.DELIVERED,
+      },
+    },
+    [states.CANCELED]: {},
+    [states.DELIVERED]: {
+      on: {
+        [transitions.EXPIRE_REVIEW_PERIOD]: states.REVIEWED,
+        [transitions.REVIEW_1_BY_CUSTOMER]: states.REVIEWED_BY_CUSTOMER,
+        [transitions.REVIEW_1_BY_PROVIDER]: states.REVIEWED_BY_PROVIDER,
+      },
+    },
+    [states.REVIEWED_BY_CUSTOMER]: {
+      on: {
+        [transitions.REVIEW_2_BY_PROVIDER]: states.REVIEWED,
+        [transitions.EXPIRE_PROVIDER_REVIEW_PERIOD]: states.REVIEWED,
+      },
+    },
+    [states.REVIEWED_BY_PROVIDER]: {
+      on: {
+        [transitions.REVIEW_2_BY_CUSTOMER]: states.REVIEWED,
+        [transitions.EXPIRE_CUSTOMER_REVIEW_PERIOD]: states.REVIEWED,
+      },
+    },
+    [states.REVIEWED]: { type: 'final' },
   },
 };
 
@@ -141,8 +174,9 @@ export const isRelevantPastTransition = transition => {
     transitions.ACCEPT,
     transitions.OPERATOR_ACCEPT,
     transitions.CANCEL,
+    transitions.COMPLETE_START,
     transitions.COMPLETE,
-    transitions.OPERATOR_COMPLETE,
+    transitions.REVIEW,
     transitions.CONFIRM_PAYMENT,
     transitions.DECLINE,
     transitions.OPERATOR_DECLINE,
@@ -181,8 +215,9 @@ export const isPrivileged = transition => {
 // Check when transaction is completed (booking over)
 export const isCompleted = transition => {
   const txCompletedTransitions = [
+    transitions.COMPLETE_START,
     transitions.COMPLETE,
-    transitions.OPERATOR_COMPLETE,
+    transitions.REVIEW,
     transitions.REVIEW_1_BY_CUSTOMER,
     transitions.REVIEW_1_BY_PROVIDER,
     transitions.REVIEW_2_BY_CUSTOMER,

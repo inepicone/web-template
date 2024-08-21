@@ -94,15 +94,7 @@ const TopbarDesktop = props => {
             <FormattedMessage id="TopbarDesktop.yourListingsLink" />
           </NamedLink>
         </MenuItem>
-        <MenuItem key="FavoriteListingsPage">
-          <NamedLink
-            className={classNames(css.yourListingsLink, currentPageClass('FavoriteListingsPage'))}
-            name="FavoriteListingsPage"
-          >
-            <span className={css.menuItemBorder} />
-            <FormattedMessage id="TopbarDesktop.favoriteListingsLink" />
-          </NamedLink>
-        </MenuItem>
+
         <MenuItem key="ProfileSettingsPage">
           <NamedLink
             className={classNames(css.profileSettingsLink, currentPageClass('ProfileSettingsPage'))}
@@ -120,6 +112,16 @@ const TopbarDesktop = props => {
             <span className={css.menuItemBorder} />
             <FormattedMessage id="TopbarDesktop.accountSettingsLink" />
           </NamedLink>
+        </MenuItem>
+        <MenuItem key="FAQS">
+          <a
+            className={classNames(css.yourListingsLink, currentPageClass('AccountSettingsPage'))}
+            name="FAQS"
+            href="https://www.rundo.com.ar/p/frequent-asked-questions"
+          >
+            <span className={css.menuItemBorder} />
+            <FormattedMessage id="Preguntas Frecuentes" />
+          </a>
         </MenuItem>
         <MenuItem key="logout">
           <InlineTextButton rootClassName={css.logoutButton} onClick={onLogout}>
@@ -146,6 +148,25 @@ const TopbarDesktop = props => {
       </span>
     </NamedLink>
   );
+  const handleButtonClick = () => {
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'BtnWspHeader');
+      setTimeout(() => {
+        window.open('https://wa.me/5492944232664', '_blank');
+      }, 300);
+    } else {
+      console.error('Meta Pixel no está definido');
+    }
+  };
+
+  const handleCreateListingClick = () => {
+    console.log('PublicArticleBtn1'); // Log para verificar
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'PublicArticleBtn1');
+    } else {
+      console.error('Meta Pixel no está definido');
+    }
+  };
 
   return (
     <nav className={classes}>
@@ -155,21 +176,25 @@ const TopbarDesktop = props => {
         alt={intl.formatMessage({ id: 'TopbarDesktop.logo' }, { marketplaceName })}
       />
       {search}
-      <a style={{width: '20%', height: '100%'}}>
-        <a style={{ height: '100%', display: 'flex', alignItems: 'center'}} href="https://wa.me/5492944232664" target="_blank" >
-        <p style={{color: "green",textAlign: "center", display: "flex",
-        color: "#07bc60",alignItems: "center"}}>Comunicate con nosotros
-        <img src="/static/icons/whatsapp.png" alt="WhatsApp" style={{marginLeft: "10%",width: '15%'}}/></p>
-        </a>
-      </a>
-      <NamedLink className={css.createListingLink} name="NewListingPage">
-        <span className={css.createListing}>
-          <FormattedMessage id="TopbarDesktop.createListing" />
-        </span>
-      </NamedLink>
+      <div style={{ width: '20%', height: '100%', display: 'flex', alignItems: 'center' }}>
+        <button onClick={handleButtonClick} style={{ border: 'none', cursor: 'pointer' }}>
+          <img
+            src="/static/icons/whatsapp.png"
+            alt="WhatsApp"
+            style={{ marginLeft: '10%', width: '36.5px', height: '35.5px' }}
+          />
+        </button>
+      </div>
+      <button onClick={handleCreateListingClick} style={{ border: 'none' }}>
+        <NamedLink onClick={handleCreateListingClick} className={css.createListingLink} name="NewListingPage">
+          <span className={css.createListing}>
+            <FormattedMessage id="TopbarDesktop.createListing" />
+          </span>
+        </NamedLink>
+      </button>
       {inboxLink}
       {profileMenu}
-      {signupLink}
+
       {loginLink}
     </nav>
   );
