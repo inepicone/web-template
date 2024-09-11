@@ -150,19 +150,19 @@
   {:name :notification/booking-cancelled-customer,
    :on :transition/cancel,
    :to :actor.role/customer,
-   :template :booking-cancel-request}
+   :template :booking-cancel-customer}
   {:name :notification/booking-cancelled-provider,
    :on :transition/cancel,
    :to :actor.role/provider,
-   :template :booking-cancel-request}
+   :template :booking-cancel-provider}
   {:name :notification/booking-cancelled-2-customer,
    :on :transition/cancel2,
    :to :actor.role/customer,
-   :template :booking-cancel-request}
+   :template :booking-cancel-customer}
   {:name :notification/booking-cancelled-2-provider,
    :on :transition/cancel2,
    :to :actor.role/provider,
-   :template :booking-cancel-request}
+   :template :booking-cancel-provider}
   {:name :notification/booking-operator-declined-request-to-customer,
    :on :transition/operator-decline,
    :to :actor.role/customer,
