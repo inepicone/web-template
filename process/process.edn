@@ -68,14 +68,14 @@
    :actions
    [{:name :action/calculate-full-refund}
     {:name :action/cancel-booking}],
-   :from :state/complete-start,
+   :from :state/accepted,
    :to :state/cancelled}
   {:name :transition/cancel2,
    :actor :actor.role/operator,
    :actions
    [{:name :action/calculate-full-refund}
     {:name :action/cancel-booking}],
-   :from :state/complete,
+   :from :state/complete-start,
    :to :state/cancelled}
   {:name :transition/review-1-by-provider,
    :actor :actor.role/provider,
