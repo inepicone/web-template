@@ -166,7 +166,7 @@
   {:name :notification/booking-operator-declined-request-to-customer,
    :on :transition/operator-decline,
    :to :actor.role/customer,
-   :template :booking-declined-request}
+   :template :booking-cancel-customer}
   {:name :notification/booking-operator-declined-request-to-provider,
    :on :transition/operator-decline,
    :to :actor.role/provider,
