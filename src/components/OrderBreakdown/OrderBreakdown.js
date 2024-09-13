@@ -127,8 +127,8 @@ export const OrderBreakdownComponent = props => {
         intl={intl}
         marketplaceCurrency={currency}
       />
- } */}
       <LineItemRefundMaybe lineItems={lineItems} intl={intl} marketplaceCurrency={currency} />
+ } */}
 
       <LineItemCustomerCommissionMaybe
         lineItems={lineItems}
@@ -136,24 +136,24 @@ export const OrderBreakdownComponent = props => {
         marketplaceName={marketplaceName}
         intl={intl}
       />
-      <LineItemCustomerCommissionRefundMaybe
+{/*       <LineItemCustomerCommissionRefundMaybe
         lineItems={lineItems}
         isCustomer={isCustomer}
         marketplaceName={marketplaceName}
         intl={intl}
-      />
+      /> */}
       <LineItemProviderCommissionMaybe
         lineItems={lineItems}
         isProvider={isProvider}
         marketplaceName={marketplaceName}
         intl={intl}
       />
-      <LineItemProviderCommissionRefundMaybe
+{/*       <LineItemProviderCommissionRefundMaybe
         lineItems={lineItems}
         isProvider={isProvider}
         marketplaceName={marketplaceName}
         intl={intl}
-      />
+      /> */}
       <LineItemTotalPrice transaction={transaction} isProvider={isProvider} intl={intl} />
 
       {hasCommissionLineItem ? (
