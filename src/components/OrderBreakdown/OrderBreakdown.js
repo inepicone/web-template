@@ -51,17 +51,39 @@ export const OrderBreakdownComponent = props => {
     return sum + (item.lineTotal.amount || 0);
   }, 0);
 
+  const total = lineItems.reduce((sum, item) => {
+    return sum + (item.lineTotal.amount || 0);
+  }, );
+
   const customerCommission = lineItems.reduce((sum, item) => {
     return sum + (isCustomer && item.code === LINE_ITEM_CUSTOMER_COMMISSION && !item.reversal ? item.lineTotal.amount : 0);
   }, 0);
 
   const netSubtotal = subtotal - subtotal * 20 / 100;
+  const nettotal = total + 20 ;
 
   const hasCommissionLineItem = lineItems.find(item => {
     const hasCustomerCommission = isCustomer && item.code === LINE_ITEM_CUSTOMER_COMMISSION;
     const hasProviderCommission = isProvider && item.code === LINE_ITEM_PROVIDER_COMMISSION;
     return (hasCustomerCommission || hasProviderCommission) && !item.reversal;
   });
+
+    // Extraer la comisión del proveedor de los line items
+    const customerCommissionItems = lineItems.filter(item => 
+      item.code === LINE_ITEM_CUSTOMER_COMMISSION && !item.reversal
+    );
+  
+    // Sumar las comisiones del proveedor
+    const customerCommissionTotal = customerCommissionItems.reduce((sum, item) => {
+      return sum + (item.lineTotal.amount || 0);
+    }, 0);
+  
+    // Formatear el total de la comisión del proveedor para mostrarlo
+    const formattedcustomerCommissionTotal = intl.formatNumber(customerCommissionTotal / 100, {
+      style: 'currency',
+      currency,
+    });
+
   const classes = classNames(rootClassName || css.root, className);
   /**
    * OrderBreakdown contains different line items:
@@ -129,37 +151,54 @@ export const OrderBreakdownComponent = props => {
       />
       <LineItemRefundMaybe lineItems={lineItems} intl={intl} marketplaceCurrency={currency} />
  } */}
-
+      {/* Mostrar el total de la comisión del proveedor */}
       <LineItemCustomerCommissionMaybe
         lineItems={lineItems}
         isCustomer={isCustomer}
         marketplaceName={marketplaceName}
         intl={intl}
-      />
+        />
 {/*       <LineItemCustomerCommissionRefundMaybe
         lineItems={lineItems}
         isCustomer={isCustomer}
         marketplaceName={marketplaceName}
         intl={intl}
-      /> */}
+        /> */}
       <LineItemProviderCommissionMaybe
         lineItems={lineItems}
         isProvider={isProvider}
         marketplaceName={marketplaceName}
         intl={intl}
-      />
+        />
 {/*       <LineItemProviderCommissionRefundMaybe
         lineItems={lineItems}
         isProvider={isProvider}
         marketplaceName={marketplaceName}
         intl={intl}
-      /> */}
-      <LineItemTotalPrice transaction={transaction} isProvider={isProvider} intl={intl} />
+        /> */}
+
+      {/* Mostrar la comisión del proveedor solo si el netSubtotal es 0 */}
+      {netSubtotal === 0 && customerCommissionItems.length > 0 && (
+        <div className={css.commissionLineItem}>
+          <hr className={css.totalDivider} />
+                <div className={css.lineItemTotal}>
+        <div className={css.totalLabel}><FormattedMessage id="OrderBreakdown.total" /></div>
+        <div className={css.totalPrice}>{formattedcustomerCommissionTotal}</div>
+      </div>
+        </div>
+      )}
+
+      {/* Ocultar el total de la orden si netSubtotal es 0 */}
+      {netSubtotal !== 0 && (
+        <LineItemTotalPrice transaction={transaction} isProvider={isProvider} intl={intl} />
+      )}
 
       {hasCommissionLineItem ? (
 
         <span className={css.feeInfo}>
           <FormattedMessage id="OrderBreakdown.commissionFeeNote" />
+          <br></br>
+          <FormattedMessage id="OrderBreakdown.commissionFeeNote2" />
         </span>
 
       ) : null}
