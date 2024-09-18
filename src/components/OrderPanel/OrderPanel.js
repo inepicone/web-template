@@ -383,27 +383,9 @@ const OrderPanel = props => {
             helmetFee={helmetFee}
           />
         ) : showProductOrderForm ? (
-          //<ProductOrderForm
-          //  formId="OrderPanelProductOrderForm"
-          //  onSubmit={onSubmit}
-          //  price={price}
-          //  marketplaceCurrency={marketplaceCurrency}
-          //  currentStock={currentStock}
-          //  pickupEnabled={pickupEnabled}
-          //  shippingEnabled={shippingEnabled}
-          //  listingId={listing.id}
-          //  isOwnListing={isOwnListing}
-          //  marketplaceName={marketplaceName}
-          //  onFetchTransactionLineItems={onFetchTransactionLineItems}
-          //  onContactUser={onContactUser}
-          //  lineItems={lineItems}
-          //  fetchLineItemsInProgress={fetchLineItemsInProgress}
-          //  fetchLineItemsError={fetchLineItemsError}
-          //  
-          ///>
           <AddToCartButton
             showProductOrderForm={showProductOrderForm}
-            isBooking={isBooking}
+            //isBooking={isBooking}
             buttonLabel={<FormattedMessage id="AddToCartButton.label" />}
             cartLabel={<FormattedMessage id="AddToCartButton.cartLabel" />}
             {...cartProps}

@@ -10,7 +10,7 @@ const AddToCartButton = props => {
     isListingPage,
     buttonLabel,
     cartLabel,
-    isBooking = false,
+    //isBooking = false,
     showProductOrderForm = true,
     isOwnListing = false,
   } = props;
