@@ -59,7 +59,7 @@ export const OrderBreakdownComponent = props => {
     return sum + (isCustomer && item.code === LINE_ITEM_CUSTOMER_COMMISSION && !item.reversal ? item.lineTotal.amount : 0);
   }, 0);
 
-  const netSubtotal = subtotal - subtotal * 20 / 100;
+  const netSubtotal = subtotal * 80 / 100;
   const nettotal = total + 20 ;
 
   const hasCommissionLineItem = lineItems.find(item => {
