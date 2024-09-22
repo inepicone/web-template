@@ -10,19 +10,30 @@ module.exports = (req, res) => {
   const { isSpeculative, orderData, bodyParams, queryParams } = req.body;
   const sdk = getSdk(req, res);
   let lineItems = null;
-  const listingPromise = () => sdk.listings.show({ id: bodyParams?.params?.listingId });
-  Promise.all([listingPromise(), fetchCommission(sdk)])
+  const listingPromise = () =>
+    isOwnListing
+    ? sdk.ownListings.show({ id: listingId })
+    : sdk.listings.show({ id: listingId, include: ['author'] });
+    
+    Promise.all([listingPromise(), fetchCommission(sdk)])
     .then(([showListingResponse, fetchAssetsResponse]) => {
-      const listing = showListingResponse.data.data;
-      const commissionAsset = fetchAssetsResponse.data.data[0];
-      const { providerCommission, customerCommission } =
-        commissionAsset?.type === 'jsonAsset' ? commissionAsset.attributes.data : {};
-      lineItems = transactionLineItems(
-        listing,
-        { ...orderData, ...bodyParams.params },
-        providerCommission,
-        customerCommission
-      );
+    const listing = showListingResponse.data.data;
+    const commissionAsset = fetchAssetsResponse.data.data[0];
+    
+    const author = showListingResponse.data.included[0];
+    const { publicData } = author.attributes.profile;
+    
+    const providerCommission = obtenerComisionProveedor(publicData);
+    
+    const { customerCommission } =
+    commissionAsset?.type === 'jsonAsset' ? commissionAsset.attributes.data : {};
+    
+    const lineItems = transactionLineItems(
+    listing,
+    orderData,
+    providerCommission,
+    customerCommission
+    );
 
       return getTrustedSdk(req);
     })

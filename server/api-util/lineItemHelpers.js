@@ -199,7 +199,23 @@ exports.calculateLineTotal = lineItem => {
     );
   }
 };
+exports.obtenerComisionProveedor = publicData => {
+  try {
+    const userType = publicData.userType;
 
+    // Definir la comisión en base al tipo de usuario
+    if (userType === 'tienda') {
+      return { percentage: 10 }; // 10% para tiendas
+    } /* else if (userType === 'persona_fisica') {
+      return 20; // 20% para persona física
+    } */ else {
+      return { percentage: 20}; // 20% para persona física
+    }
+  } catch (error) {
+    console.error('Error al obtener la comisión del proveedor:', error);
+    throw error;
+  }
+};
 /**
  * Calculates the total sum of lineTotals for given lineItems
  *
@@ -251,6 +267,7 @@ exports.calculateTotalForCustomer = lineItems => {
  *
  */
 exports.constructValidLineItems = lineItems => {
+
   const lineItemsWithTotals = lineItems.map(lineItem => {
     const { code, quantity, percentage } = lineItem;
 
