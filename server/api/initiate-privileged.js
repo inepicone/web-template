@@ -23,9 +23,9 @@ module.exports = (req, res) => {
     const author = showListingResponse.data.included[0];
     const { publicData } = author.attributes.profile;
     
-    const providerCommission = obtenerComisionProveedor(publicData);
+    const customerCommission = obtenerComisionProveedor(publicData);
     
-    const { customerCommission } =
+    const { providerCommission } =
     commissionAsset?.type === 'jsonAsset' ? commissionAsset.attributes.data : {};
     
     const lineItems = transactionLineItems(
@@ -39,6 +39,7 @@ module.exports = (req, res) => {
     })
     .then(trustedSdk => {
       const { params } = bodyParams;
+
       // Add lineItems to the body params
       const body = {
         ...bodyParams,
@@ -47,6 +48,7 @@ module.exports = (req, res) => {
           lineItems,
         },
       };
+
       if (isSpeculative) {
         return trustedSdk.transactions.initiateSpeculative(body, queryParams);
       }

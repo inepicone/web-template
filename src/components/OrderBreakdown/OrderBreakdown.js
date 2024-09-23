@@ -177,7 +177,7 @@ export const OrderBreakdownComponent = props => {
         intl={intl}
         /> */}
 
-      {/* Mostrar la comisión del proveedor solo si el netSubtotal es 0 */}
+      {/* Mostrar la comisión del proveedor solo si el netSubtotal(pago al oferente) es 0 */}
       {netSubtotal === 0 && customerCommissionItems.length > 0 && (
         <div className={css.commissionLineItem}>
           <hr className={css.totalDivider} />
