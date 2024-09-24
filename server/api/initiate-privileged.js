@@ -23,7 +23,7 @@ module.exports = (req, res) => {
     const author = showListingResponse.data.included[0];
     const { publicData } = author.attributes.profile;
     
-    const customerCommission = obtenerComisionProveedor(publicData);
+    const customerCommission = obtenerComisionCliente(publicData);
     
     const { providerCommission } =
     commissionAsset?.type === 'jsonAsset' ? commissionAsset.attributes.data : {};

@@ -53,14 +53,14 @@ export const OrderBreakdownComponent = props => {
 
   const total = lineItems.reduce((sum, item) => {
     return sum + (item.lineTotal.amount || 0);
-  }, );
+  }, 0);
 
   const customerCommission = lineItems.reduce((sum, item) => {
     return sum + (isCustomer && item.code === LINE_ITEM_CUSTOMER_COMMISSION && !item.reversal ? item.lineTotal.amount : 0);
   }, 0);
 
-  const netSubtotal = subtotal * 80 / 100;
-  const nettotal = total + 20 ;
+  /* nst netSubtotal = subtotal * 80 / 100; */
+/*   const nettotal = total / 100 ; */
 
   const hasCommissionLineItem = lineItems.find(item => {
     const hasCustomerCommission = isCustomer && item.code === LINE_ITEM_CUSTOMER_COMMISSION;
@@ -83,7 +83,22 @@ export const OrderBreakdownComponent = props => {
       style: 'currency',
       currency,
     });
+  // Encontrar el precio base del item
+  const basePriceItem = lineItems.find(item => LISTING_UNIT_TYPES.includes(item.code) && !item.reversal);
+  const basePrice = basePriceItem ? basePriceItem.lineTotal.amount : 0;
 
+  // Si la comisión del cliente es el 10% del precio base
+  const isCustomerCommission10Percent = customerCommission === basePrice * 0.1;
+
+
+ // Ajustar el netSubtotal dependiendo de si la comisión es el 10%
+ const netSubtotal = isCustomerCommission10Percent ? basePrice * 90 / 100 : basePrice * 80 / 100;
+ const nettotal = intl.formatNumber(basePrice / 100, {
+  style: 'currency',
+  currency,
+});
+ // Formatear los valores
+ const formattedNetSubtotal = intl.formatNumber(netSubtotal / 100, { style: 'currency', currency });
   const classes = classNames(rootClassName || css.root, className);
   /**
    * OrderBreakdown contains different line items:
@@ -138,9 +153,10 @@ export const OrderBreakdownComponent = props => {
         <span className={css.itemLabel}>
           <FormattedMessage id="OrderBreakdown.subTotal" />
         </span> 
-         <span className={css.itemValue}>
-          {intl.formatNumber(netSubtotal / 100, { style: 'currency', currency })}
-        </span> 
+        <span className={css.itemValue}>
+          {formattedNetSubtotal}
+        </span>
+
       </div>
 {/* {       <LineItemSubTotalMaybe
         lineItems={lineItems}
@@ -190,7 +206,13 @@ export const OrderBreakdownComponent = props => {
 
       {/* Ocultar el total de la orden si netSubtotal es 0 */}
       {netSubtotal !== 0 && (
-        <LineItemTotalPrice transaction={transaction} isProvider={isProvider} intl={intl} />
+        <div className={css.commissionLineItem}>
+        <hr className={css.totalDivider} />
+              <div className={css.lineItemTotal}>
+      <div className={css.totalLabel}><FormattedMessage id="OrderBreakdown.total" /></div>
+      <div className={css.totalPrice}>{nettotal}</div>
+    </div>
+      </div>
       )}
 
       {hasCommissionLineItem ? (

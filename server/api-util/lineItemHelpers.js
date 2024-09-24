@@ -199,20 +199,18 @@ exports.calculateLineTotal = lineItem => {
     );
   }
 };
-exports.obtenerComisionProveedor = publicData => {
+exports.obtenerComisionCliente = publicData => {
   try {
     const userType = publicData.userType;
 
     // Definir la comisión en base al tipo de usuario
     if (userType === 'tienda') {
       return { percentage: 10 }; // 10% para tiendas
-    } /* else if (userType === 'persona_fisica') {
-      return 20; // 20% para persona física
-    } */ else {
+    } else {
       return { percentage: 20}; // 20% para persona física
     }
   } catch (error) {
-    console.error('Error al obtener la comisión del proveedor:', error);
+    console.error('Error al obtener la comisión del Cliente:', error);
     throw error;
   }
 };

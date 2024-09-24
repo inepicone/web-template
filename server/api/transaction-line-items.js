@@ -1,7 +1,7 @@
 const { transactionLineItems } = require('../api-util/lineItems');
 const { getSdk, handleError, serialize, fetchCommission } = require('../api-util/sdk');
 const { constructValidLineItems } = require('../api-util/lineItemHelpers');
-const { obtenerComisionProveedor } = require('../api-util/lineItemHelpers');
+const { obtenerComisionCliente } = require('../api-util/lineItemHelpers');
 
 module.exports = (req, res) => {
   const { isOwnListing, listingId, orderData } = req.body;
@@ -21,7 +21,7 @@ module.exports = (req, res) => {
     const author = showListingResponse.data.included[0];
     const { publicData } = author.attributes.profile;
     
-    const customerCommission = obtenerComisionProveedor(publicData);
+    const customerCommission = obtenerComisionCliente(publicData);
     
     const { providerCommission } =
     commissionAsset?.type === 'jsonAsset' ? commissionAsset.attributes.data : {};
