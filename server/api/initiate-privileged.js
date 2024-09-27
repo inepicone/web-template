@@ -26,14 +26,13 @@ module.exports = (req, res) => {
 
       const { providerCommission } =
         commissionAsset?.type === 'jsonAsset' ? commissionAsset.attributes.data : {};
-
-      const lineItems = transactionLineItems(
+        
+         lineItems = transactionLineItems(
         listing,
         { ...orderData, ...bodyParams.params },
         providerCommission,
         customerCommission
       );
-      console.log('LineItems:', lineItems);
       return getTrustedSdk(req);
     })
     .then(trustedSdk => {
@@ -49,8 +48,6 @@ module.exports = (req, res) => {
       };
 
       if (isSpeculative) {
-        console.log('Body Params:', JSON.stringify(body, null, 2));
-        console.log('Query Params:', JSON.stringify(queryParams, null, 2));
         return trustedSdk.transactions.initiateSpeculative(body, queryParams);
       }
       return trustedSdk.transactions.initiate(body, queryParams);
