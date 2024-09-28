@@ -357,7 +357,7 @@ export const ListingPageComponent = props => {
               </H4>
             </div>
             <h4 className={css.mobileHeading2}>
-                <FormattedMessage id="Descripción del artículo"/>
+                <FormattedMessage id="DescripciónDelArtículo"/>
             </h4>
             <SectionTextMaybe text={description} showAsIngress />
             <SectionDetailsMaybe

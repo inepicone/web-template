@@ -362,33 +362,52 @@ const OrderPanel = props => {
             fetchLineItemsError={fetchLineItemsError}
           />
         ) : showBookingDatesForm ? (
-          <BookingDatesForm
-            className={css.bookingForm}
-            formId="OrderPanelBookingDatesForm"
-            lineItemUnitType={lineItemUnitType}
+          <>
+            <BookingDatesForm
+              className={css.bookingForm}
+              formId="OrderPanelBookingDatesForm"
+              lineItemUnitType={lineItemUnitType}
+              onSubmit={onSubmit}
+              price={price}
+              marketplaceCurrency={marketplaceCurrency}
+              dayCountAvailableForBooking={dayCountAvailableForBooking}
+              listingId={listing.id}
+              isOwnListing={isOwnListing}
+              monthlyTimeSlots={monthlyTimeSlots}
+              onFetchTimeSlots={onFetchTimeSlots}
+              timeZone={timeZone}
+              marketplaceName={marketplaceName}
+              onFetchTransactionLineItems={onFetchTransactionLineItems}
+              lineItems={lineItems}
+              fetchLineItemsInProgress={fetchLineItemsInProgress}
+              fetchLineItemsError={fetchLineItemsError}
+              helmetFee={helmetFee}
+            />
+            <AddToCartButton
+              showBookingDatesForm={showBookingDatesForm}
+              isBooking={isBooking}
+              buttonLabel={<FormattedMessage id="AddToCartButton.label" />}
+              cartLabel={<FormattedMessage id="AddToCartButton.cartLabel" />}
+              {...cartProps}
+            />
+          </>
+        ) : showProductOrderForm ? (
+          <ProductOrderForm
+            formId="OrderPanelProductOrderForm"
             onSubmit={onSubmit}
             price={price}
             marketplaceCurrency={marketplaceCurrency}
-            dayCountAvailableForBooking={dayCountAvailableForBooking}
+            currentStock={currentStock}
+            pickupEnabled={pickupEnabled}
+            shippingEnabled={shippingEnabled}
             listingId={listing.id}
             isOwnListing={isOwnListing}
-            monthlyTimeSlots={monthlyTimeSlots}
-            onFetchTimeSlots={onFetchTimeSlots}
-            timeZone={timeZone}
             marketplaceName={marketplaceName}
             onFetchTransactionLineItems={onFetchTransactionLineItems}
+            onContactUser={onContactUser}
             lineItems={lineItems}
             fetchLineItemsInProgress={fetchLineItemsInProgress}
             fetchLineItemsError={fetchLineItemsError}
-            helmetFee={helmetFee}
-          />
-        ) : showProductOrderForm ? (
-          <AddToCartButton
-            showProductOrderForm={showProductOrderForm}
-            //isBooking={isBooking}
-            buttonLabel={<FormattedMessage id="AddToCartButton.label" />}
-            cartLabel={<FormattedMessage id="AddToCartButton.cartLabel" />}
-            {...cartProps}
           />
         ) : showInquiryForm ? (
           <InquiryWithoutPaymentForm formId="OrderPanelInquiryForm" onSubmit={onSubmit} />

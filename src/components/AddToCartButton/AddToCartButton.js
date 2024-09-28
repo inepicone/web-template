@@ -10,15 +10,16 @@ const AddToCartButton = props => {
     isListingPage,
     buttonLabel,
     cartLabel,
-    //isBooking = false,
-    showProductOrderForm = true,
+    isPurchase = false,
+    showBookingDatesForm = true,
+    //showProductOrderForm = true,
     isOwnListing = false,
   } = props;
 
-  //if (isBooking || !showProductOrderForm) {
-  //  return null;
-  //}
-
+  if (isPurchase || !showBookingDatesForm) {
+    return null;
+  }
+   
   const increaseCount = () => incrementCart(1);
   const decreaseCount = () => incrementCart(-1);
 

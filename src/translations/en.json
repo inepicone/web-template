@@ -1079,6 +1079,7 @@
   "UserNav.profileSettings": "Profile settings",
   "UserNav.yourListings": "Your listings",
   "AddToCartButton.cartLabel": "Cart:",
-  "AddToCartButton.label": "Add to cart"
-
+  "AddToCartButton.label": "Add to cart",
+  "PreguntasFrecuentes": "Preguntas Frecuentes",
+  "DescripciónDelArtículo": "Descripción del Artículo"
 }

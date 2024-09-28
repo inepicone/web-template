@@ -191,7 +191,7 @@ const TopbarDesktop = props => {
             name="FAQS" href="https://www.rundo.com.ar/p/frequent-asked-questions"
           >
             <span className={css.menuItemBorder} />
-            <FormattedMessage id="Preguntas Frecuentes" />
+            <FormattedMessage id="PreguntasFrecuentes" />
           </a>
         </MenuItem>
         <MenuItem key="logout">
