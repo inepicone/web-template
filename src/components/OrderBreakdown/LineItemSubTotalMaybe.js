@@ -67,19 +67,33 @@ const LineItemSubTotalMaybe = props => {
 
   // all non-reversal, non-commission line items
   const subTotalLineItems = nonCommissionNonReversalLineItems(lineItems);
-  // line totals of those line items combined
-  const subTotal = lineItemsTotal(subTotalLineItems, marketplaceCurrency);
+  
+  // Encontrar el precio base del item
+  const basePriceItem = subTotalLineItems.find(item => !item.reversal);
+  const basePrice = basePriceItem ? basePriceItem.lineTotal.amount : 0;
 
-  const formattedSubTotal = subTotalLineItems.length > 0 ? formatMoney(intl, subTotal) : null;
+  // Calcular la comisión del cliente
+  const customerCommission = lineItems.reduce((sum, item) => {
+    return sum + (item.code === LINE_ITEM_CUSTOMER_COMMISSION && !item.reversal ? item.lineTotal.amount : 0);
+  }, 0);
 
-  return formattedSubTotal && showSubTotal ? (
+  // Si la comisión del cliente es el 10% del precio base
+  const isCustomerCommission10Percent = customerCommission === basePrice * 0.1;
+
+  // Ajustar el netSubtotal dependiendo de si la comisión es el 10%
+  const netSubtotal = isCustomerCommission10Percent ? basePrice * 90 / 100 : basePrice * 80 / 100;
+
+  // Formatear el netSubtotal
+  const formattedNetSubtotal = intl.formatNumber(netSubtotal / 100, { style: 'currency', currency: marketplaceCurrency });
+
+  return formattedNetSubtotal && showSubTotal ? (
     <>
       <hr className={css.totalDivider} />
       <div className={css.subTotalLineItem}>
         <span className={css.itemLabel}>
           <FormattedMessage id="OrderBreakdown.subTotal" />
         </span>
-        <span className={css.itemValue}>{formattedSubTotal}</span>
+        <span className={css.itemValue}>{formattedNetSubtotal}</span>
       </div>
     </>
   ) : null;

@@ -149,32 +149,31 @@ export const OrderBreakdownComponent = props => {
       <LineItemUnknownItemsMaybe lineItems={lineItems} isProvider={isProvider} intl={intl} />
 
       {/* Codigo modificado para mostrar el subtotal - el valor de comisión */}
-      <div className={css.subTotalLineItem}>
+      {/*       <div className={css.subTotalLineItem}>
         <span className={css.itemLabel}>
           <FormattedMessage id="OrderBreakdown.subTotal" />
-        </span> 
-        <span className={css.itemValue}>
-          {formattedNetSubtotal}
         </span>
-
-      </div>
-{/* {       <LineItemSubTotalMaybe
+        <span className={css.itemValue}>
+          {formattedNetSubtotal} 
+        </span>
+      </div> */}
+             <LineItemSubTotalMaybe
         lineItems={lineItems}
         code={lineItemUnitType}
         userRole={userRole}
         intl={intl}
         marketplaceCurrency={currency}
       />
-      <LineItemRefundMaybe lineItems={lineItems} intl={intl} marketplaceCurrency={currency} />
- } */}
+      {/* <LineItemRefundMaybe lineItems={lineItems} intl={intl} marketplaceCurrency={currency} /> */}
+ 
       {/* Mostrar el total de la comisión del proveedor */}
       <LineItemCustomerCommissionMaybe
         lineItems={lineItems}
         isCustomer={isCustomer}
         marketplaceName={marketplaceName}
         intl={intl}
-        />
-{/*       <LineItemCustomerCommissionRefundMaybe
+      />
+      {/*       <LineItemCustomerCommissionRefundMaybe
         lineItems={lineItems}
         isCustomer={isCustomer}
         marketplaceName={marketplaceName}
@@ -185,8 +184,8 @@ export const OrderBreakdownComponent = props => {
         isProvider={isProvider}
         marketplaceName={marketplaceName}
         intl={intl}
-        />
-{/*       <LineItemProviderCommissionRefundMaybe
+      />
+      {/*       <LineItemProviderCommissionRefundMaybe
         lineItems={lineItems}
         isProvider={isProvider}
         marketplaceName={marketplaceName}
@@ -197,10 +196,12 @@ export const OrderBreakdownComponent = props => {
       {netSubtotal === 0 && customerCommissionItems.length > 0 && (
         <div className={css.commissionLineItem}>
           <hr className={css.totalDivider} />
-                <div className={css.lineItemTotal}>
-        <div className={css.totalLabel}><FormattedMessage id="OrderBreakdown.total" /></div>
-        <div className={css.totalPrice}>{formattedcustomerCommissionTotal}</div>
-      </div>
+          <div className={css.lineItemTotal}>
+            <div className={css.totalLabel}>
+              <FormattedMessage id="OrderBreakdown.total" />
+            </div>
+            <div className={css.totalPrice}>{formattedcustomerCommissionTotal}</div>
+          </div>
         </div>
       )}
 
