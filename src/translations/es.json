@@ -1081,5 +1081,20 @@
   "PreguntasFrecuentes": "Preguntas Frecuentes",
   "DescripciónDelArtículo": "Descripción del Artículo",
   "AddToCartButton.cartLabel": "Carrito:",
-  "AddToCartButton.label": "Agregar al carrito"
+  "AddToCartButton.label": "Agregar al carrito",
+  "CartPage.buyNowButton": "Buy now",
+  "CartPage.deliveryShipping": "Delivery method: shipping",
+  "CartPage.deliveryPickup": "Delivery method: pickup",
+  "CartPage.deliveryNotSet": "Delivery method not set. Please contact provider.",
+  "CartPage.nextAuthor": "Siguiente",
+  "CartPage.optionSelect": "Elegir opción...",
+  "CartPage.optionShipping": "Delivery",
+  "CartPage.optionPickup": "Pickup",
+  "CartPage.pageTitleAuthor": "Your cart from {name}",
+  "CartPage.pageTitleNoItems": "Carrito vacío",
+  "CartPage.selectDeliveryMethod": "Seleciona el método de envío",
+  "TopbarDesktop.cart": "Carrito",
+  "TopbarDesktop.yourCartLink": "Carrito",
+  "TopbarMobileMenu.cartLink": "Carrito",
+  "UserNav.cart": "Carrito"
 }

@@ -306,3 +306,14 @@ export const handleToggleFavorites = parameters => isFavorite => {
     onUpdateFavorites(payload);
   }
 };
+
+export const handleAddToCart = parameters => value => {
+  const { currentUser, routes, history, location, onToggleCart, listingId, authorId } = parameters;
+
+  if (currentUser === null) {
+    const state = { from: `${location.pathname}${location.search}${location.hash}` };
+    history.push(createResourceLocatorString('LoginPage', routes, {}, {}), state);
+  } else {
+    onToggleCart(listingId, authorId, value);
+  }
+};

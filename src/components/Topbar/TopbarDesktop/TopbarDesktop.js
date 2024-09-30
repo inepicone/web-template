@@ -85,52 +85,63 @@ const TopbarDesktop = props => {
         <Avatar className={css.avatar} user={currentUser} disableProfileLink />
       </MenuLabel>
       <MenuContent className={css.profileMenuContent}>
-        <MenuItem key="ManageListingsPage">
-          <NamedLink
-            className={classNames(css.yourListingsLink, currentPageClass('ManageListingsPage'))}
-            name="ManageListingsPage"
-          >
-            <span className={css.menuItemBorder} />
-            <FormattedMessage id="TopbarDesktop.yourListingsLink" />
-          </NamedLink>
-        </MenuItem>
+      <MenuItem key="ManageListingsPage">
+        <NamedLink
+          className={classNames(css.yourListingsLink, currentPageClass('ManageListingsPage'))}
+          name="ManageListingsPage"
+        >
+          <span className={css.menuItemBorder} />
+          <FormattedMessage id="TopbarDesktop.yourListingsLink" />
+        </NamedLink>
+      </MenuItem>
 
-        <MenuItem key="ProfileSettingsPage">
-          <NamedLink
-            className={classNames(css.profileSettingsLink, currentPageClass('ProfileSettingsPage'))}
-            name="ProfileSettingsPage"
-          >
-            <span className={css.menuItemBorder} />
-            <FormattedMessage id="TopbarDesktop.profileSettingsLink" />
-          </NamedLink>
-        </MenuItem>
-        <MenuItem key="AccountSettingsPage">
-          <NamedLink
-            className={classNames(css.yourListingsLink, currentPageClass('AccountSettingsPage'))}
-            name="AccountSettingsPage"
-          >
-            <span className={css.menuItemBorder} />
-            <FormattedMessage id="TopbarDesktop.accountSettingsLink" />
-          </NamedLink>
-        </MenuItem>
-        <MenuItem key="FAQS">
-          <a
-            className={classNames(css.yourListingsLink, currentPageClass('AccountSettingsPage'))}
-            name="FAQS"
-            href="https://www.rundo.com.ar/p/frequent-asked-questions"
-          >
-            <span className={css.menuItemBorder} />
-            <FormattedMessage id="PreguntasFrecuentes" />
-          </a>
-        </MenuItem>
-        <MenuItem key="logout">
-          <InlineTextButton rootClassName={css.logoutButton} onClick={onLogout}>
-            <span className={css.menuItemBorder} />
-            <FormattedMessage id="TopbarDesktop.logout" />
-          </InlineTextButton>
-        </MenuItem>
-      </MenuContent>
-    </Menu>
+      <MenuItem key="ProfileSettingsPage">
+        <NamedLink
+          className={classNames(css.profileSettingsLink, currentPageClass('ProfileSettingsPage'))}
+          name="ProfileSettingsPage"
+        >
+          <span className={css.menuItemBorder} />
+          <FormattedMessage id="TopbarDesktop.profileSettingsLink" />
+        </NamedLink>
+      </MenuItem>
+
+      <MenuItem key="AccountSettingsPage">
+        <NamedLink
+          className={classNames(css.yourListingsLink, currentPageClass('AccountSettingsPage'))}
+          name="AccountSettingsPage"
+        >
+          <span className={css.menuItemBorder} />
+          <FormattedMessage id="TopbarDesktop.accountSettingsLink" />
+        </NamedLink>
+      </MenuItem>
+
+      <MenuItem key="CartPage">
+        <NamedLink className={css.topbarLink} name="CartPage">
+          <span className={css.topbarLinkLabel}>
+            <FormattedMessage id="TopbarDesktop.cart" />
+            {notificationDot}
+          </span>
+        </NamedLink>
+      </MenuItem>
+
+      <MenuItem key="FAQS">
+        <a
+          className={classNames(css.yourListingsLink, currentPageClass('AccountSettingsPage'))}
+          href="https://www.rundo.com.ar/p/frequent-asked-questions"
+        >
+          <span className={css.menuItemBorder} />
+          <FormattedMessage id="PreguntasFrecuentes" />
+        </a>
+      </MenuItem>
+
+      <MenuItem key="logout">
+        <InlineTextButton rootClassName={css.logoutButton} onClick={onLogout}>
+          <span className={css.menuItemBorder} />
+          <FormattedMessage id="TopbarDesktop.logout" />
+        </InlineTextButton>
+      </MenuItem>
+    </MenuContent>
+  </Menu>
   ) : null;
 
   const signupLink = isAuthenticatedOrJustHydrated ? null : (
@@ -185,6 +196,14 @@ const TopbarDesktop = props => {
           />
         </button>
       </div>
+      <button onClick={handleCreateListingClick} style={{ border: 'none' }}>  
+      <NamedLink className={css.topbarLink} name="CartPage">
+          <span className={css.topbarLinkLabel}>
+            <FormattedMessage id="TopbarDesktop.cart" />
+            {notificationDot}
+          </span>
+        </NamedLink>
+      </button>
       <button onClick={handleCreateListingClick} style={{ border: 'none' }}>
         <NamedLink onClick={handleCreateListingClick} className={css.createListingLink} name="NewListingPage">
           <span className={css.createListing}>

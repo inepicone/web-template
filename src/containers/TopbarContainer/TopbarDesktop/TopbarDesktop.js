@@ -22,6 +22,21 @@ import CustomLinksMenu from './CustomLinksMenu/CustomLinksMenu';
 
 import css from './TopbarDesktop.module.css';
 
+const CartLink = ({ notificationCount }) => {
+    const notificationDot = notificationCount > 0 ? <div className={css.notificationDot} /> : null;
+    return (
+      <NamedLink
+        className={css.topbarLink}
+        name="CartPage"
+      >
+        <span className={css.topbarLinkLabel}>
+          <FormattedMessage id="TopbarDesktop.cart" />
+          {notificationDot}
+        </span>
+      </NamedLink>
+    );
+  };
+
 const SignupLink = () => {
   return (
     <NamedLink name="SignupPage" className={css.topbarLink}>
@@ -133,6 +148,10 @@ const TopbarDesktop = props => {
 
   const marketplaceName = config.marketplaceName;
   const authenticatedOnClientSide = mounted && isAuthenticated;
+  //Ine 
+  const { cart } = currentUser?.attributes.profile.privateData || {};
+  const cartCount = cart && Object.keys(cart).length || 0;
+  //fin ine
   const isAuthenticatedOrJustHydrated = isAuthenticated || !mounted;
 
   const giveSpaceForSearch = customLinks == null || customLinks?.length === 0;
@@ -144,6 +163,12 @@ const TopbarDesktop = props => {
       currentUserHasListings={currentUserHasListings}
     />
   ) : null;
+
+  //ine
+  const cartLinkMaybe = authenticatedOnClientSide ? (
+    <CartLink notificationCount={cartCount} />
+  ) : null;
+  //fin ine
 
   const currentPageClass = page => {
     const isAccountSettingsPage =
@@ -191,7 +216,7 @@ const TopbarDesktop = props => {
             name="FAQS" href="https://www.rundo.com.ar/p/frequent-asked-questions"
           >
             <span className={css.menuItemBorder} />
-            <FormattedMessage id="PreguntasFrecuentes" />
+            <FormattedMessage id="Preguntas Frecuentes" />
           </a>
         </MenuItem>
         <MenuItem key="logout">
@@ -199,6 +224,15 @@ const TopbarDesktop = props => {
             <span className={css.menuItemBorder} />
             <FormattedMessage id="TopbarDesktop.logout" />
           </InlineTextButton>
+        </MenuItem>
+        <MenuItem key="CartPage">
+          <NamedLink
+            className={classNames(css.menuLink, currentPageClass('CartPage'))}
+            name="CartPage"
+          >
+            <span className={css.menuItemBorder} />
+            <FormattedMessage id="TopbarDesktop.yourCartLink" />
+          </NamedLink>
         </MenuItem>
       </MenuContent>
     </Menu>
@@ -242,6 +276,7 @@ const TopbarDesktop = props => {
         </span>
       </NamedLink>
       {inboxLink}
+      {cartLinkMaybe}
       {profileMenu}
       
       {loginLink}
@@ -275,4 +310,3 @@ TopbarDesktop.propTypes = {
 };
 
 export default TopbarDesktop;
-

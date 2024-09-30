@@ -12,7 +12,7 @@ import {
   LISTING_PAGE_PENDING_APPROVAL_VARIANT,
 } from '../../util/urlHelpers';
 import { getProcess, isBookingProcessAlias } from '../../transactions/transaction';
-import { fetchCurrentUser, fetchCurrentUserHasOrdersSuccess } from '../../ducks/user.duck';
+import { fetchCurrentUser, fetchCurrentUserHasOrdersSuccess, currentUserShowSuccess } from '../../ducks/user.duck';
 
 const { UUID } = sdkTypes;
 
@@ -400,3 +400,95 @@ export const loadData = (params, search, config) => dispatch => {
     return response;
   });
 };
+// Add or remove items from cart
+//export const toggleCart = (listingId, authorId, increment = 1) => (dispatch, getState, sdk) => {
+//  const currentUser = getState().user.currentUser;
+//  const cart = currentUser.attributes.profile.privateData?.cart || [];
+//
+//  // Cart as object with author ids as keys
+//  let newCart = getNewCart(cart, authorId, listingId, increment);
+//
+//  sdk.currentUser
+//    .updateProfile(
+//      {
+//        privateData: {
+//          cart: newCart,
+//        },
+//      },
+//      { expand: true }
+//    )
+//    .then(resp => {
+//      const entities = denormalisedResponseEntities(resp);
+//      if (entities.length !== 1) {
+//        throw new Error('Expected a resource in the sdk.currentUser.updateProfile response');
+//      }
+//      const currentUser = entities[0];
+//
+//      // Update current user in state.user.currentUser through user.duck.js
+//      dispatch(currentUserShowSuccess(currentUser));
+//    })
+//    .catch(e => {
+//      console.log('e', e)
+//    });
+//};
+
+//const listingIsInCart = (cart, authorId, listingId) => {
+//  if (!cart || !cart[authorId]) {
+//    return false;
+//  }
+//
+//  return Object.keys(cart[authorId]).includes(listingId);
+//};
+
+
+//const getNewCart = (cart, authorId, listingId, increment) => {
+//  const authorInCart = Object.keys(cart).includes(authorId);
+//  const isListingInCart = listingIsInCart(cart, authorId, listingId);
+//
+//  const newCount = ((cart[authorId] && cart[authorId][listingId]?.count) || 0) + increment;
+//
+//  // Increment an existing listing
+//  if (authorInCart && isListingInCart && newCount > 0) {
+//    return {
+//      ...cart,
+//      [authorId]: {
+//        ...cart[authorId],
+//        [listingId]: {
+//          count: newCount,
+//        },
+//      },
+//    };
+//    // Remove an existing listing from cart
+//  } else if (authorInCart && isListingInCart && newCount <= 0) {
+//    const newCart = { ...cart };
+//    delete newCart[authorId][listingId];
+//
+//    // If the listing was the author's last one, remove the author as well
+//    if (Object.keys(newCart[authorId]).length == 0) {
+//      delete newCart[authorId];
+//    }
+//
+//    return newCart;
+//    // Add new listing to an existing author
+//  } else if (authorInCart && !isListingInCart) {
+//    return {
+//      ...cart,
+//      [authorId]: {
+//        ...cart[authorId],
+//        [listingId]: {
+//          count: increment,
+//        },
+//      },
+//    };
+//    // Add new listing and a new author
+//  } else {
+//    return {
+//      ...cart,
+//      [authorId]: {
+//        [listingId]: {
+//          count: increment,
+//        },
+//      },
+//    };
+//  }
+//};

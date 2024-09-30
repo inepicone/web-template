@@ -19,6 +19,7 @@ import { loadData as StripePayoutPageLoader } from './StripePayoutPage/StripePay
 import { loadData as TermsOfServicePageLoader } from './TermsOfServicePage/TermsOfServicePage.duck';
 import { loadData as TransactionPageLoader, setInitialValues as TransactionPageInitialValues,} from './TransactionPage/TransactionPage.duck';
 import { loadData as FavoriteListingsPageLoader } from './FavoriteListingsPage/FavoriteListingsPage.duck';
+import { loadData as CartPageLoader } from './CartPage/CartPage.duck';
 
 const getPageDataLoadingAPI = () => {
   return {
@@ -76,6 +77,9 @@ const getPageDataLoadingAPI = () => {
     TransactionPage: {
       loadData: TransactionPageLoader,
       setInitialValues: TransactionPageInitialValues,
+    },
+    CartPage: {
+      loadData: CartPageLoader,
     },
   };
 };

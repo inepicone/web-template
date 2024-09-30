@@ -1,0 +1,19 @@
+.rootForImage {
+    /* Layout - image will take space defined by aspect ratio wrapper */
+    width: 100%;
+    border: solid 1px var(--matterColorNegative);
+    border-radius: 4px;
+    height: 80px;
+    width: 80px;
+  }
+  
+  .cardLayout {
+    display: flex;
+    flex-direction: column;
+    padding-left: 45px;
+  }
+  
+  .itemLayout {
+    display: flex;
+    flex-direction: row;
+  }

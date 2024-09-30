@@ -19,6 +19,13 @@ const UserNav = props => {
         name: 'ManageListingsPage',
       },
     },
+    {
+      text: <FormattedMessage id="UserNav.cart" />,
+      selected: currentPage === 'CartPage',
+      linkProps: {
+        name: 'CartPage',
+      },
+    },
     /*{
       text: <FormattedMessage id="UserNav.favoriteListings" />,
       selected: currentPage === 'FavoriteListingsPage',

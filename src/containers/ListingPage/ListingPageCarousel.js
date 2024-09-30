@@ -52,8 +52,9 @@ import {
   setInitialValues,
   fetchTimeSlots,
   fetchTransactionLineItems,
+//  toggleCart,
 } from './ListingPage.duck';
-
+import { toggleCart } from '../CartPage/CartPage.duck.js';
 import {
   LoadingPage,
   ErrorPage,
@@ -63,6 +64,7 @@ import {
   handleSubmitInquiry,
   handleSubmit,
   handleToggleFavorites,
+  handleAddToCart,
 } from './ListingPage.shared';
 import { updateProfile } from '../ProfileSettingsPage/ProfileSettingsPage.duck';
 
@@ -147,6 +149,7 @@ export const ListingPageComponent = props => {
     onMessageSubmit,
     activityFeed,
     isInquiryProcess,
+    onToggleCart,
   } = props;
 
   // prop override makes testing a bit easier
@@ -308,7 +311,32 @@ export const ListingPageComponent = props => {
   });
   const availabilityMaybe = schemaAvailability ? { availability: schemaAvailability } : {};
 
-  
+  // Cart functionality – add this within the component but before the return statement
+  const onAddToCart = handleAddToCart({
+    ...commonParams,
+    location,
+    currentUser,
+    onToggleCart,
+    listingId: listingId.uuid,
+    authorId: currentAuthor.id.uuid,
+  });
+
+  const cart = currentUser?.attributes?.profile?.privateData?.cart;
+  const listingCartCount =
+    (cart &&
+      cart[(currentAuthor?.id.uuid)] &&
+      cart[(currentAuthor?.id.uuid)][(currentListing?.id?.uuid)]?.count) ||
+    0;
+
+  const cartProps = {
+    listing: currentListing,
+    count: listingCartCount,
+    incrementCart: onAddToCart,
+    isListingPage: true,
+    isOwnListing,
+  };
+
+  // cart functionality ends
   return (
     <Page
       title={schemaTitle}
@@ -472,6 +500,7 @@ export const ListingPageComponent = props => {
               marketplaceName={config.marketplaceName}
               onToggleFavorites={onToggleFavorites}
               currentUser={currentUser}
+              cartProps={cartProps} // Add cartProps to OrderPanel
             />
           </div>
         </div>
@@ -625,6 +654,8 @@ const mapDispatchToProps = dispatch => ({
   onFetchTimeSlots: (listingId, start, end, timeZone) =>
     dispatch(fetchTimeSlots(listingId, start, end, timeZone)),
   onUpdateFavorites: (payload) => dispatch(updateProfile(payload)),
+  onToggleCart: (listingId, authorId, increment) =>
+    dispatch(toggleCart(listingId, authorId, increment)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the
@@ -641,3 +672,4 @@ const ListingPage = compose(
 )(EnhancedListingPage);
 
 export default ListingPage;
+

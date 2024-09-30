@@ -19,7 +19,9 @@ import SearchPage from './SearchPage/SearchPage.duck';
 import StripePayoutPage from './StripePayoutPage/StripePayoutPage.duck';
 import TransactionPage from './TransactionPage/TransactionPage.duck';
 import FavoriteListingsPage from './FavoriteListingsPage/FavoriteListingsPage.duck';
+import CartPage from './CartPage/CartPage.duck';
 export {
+  CartPage,
   CheckoutPage,
   ContactDetailsPage,
   EditListingPage,
