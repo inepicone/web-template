@@ -79,7 +79,7 @@ export const OrderBreakdownComponent = props => {
     }, 0);
   
     // Formatear el total de la comisión del proveedor para mostrarlo
-    const formattedcustomerCommissionTotal = intl.formatNumber(customerCommissionTotal / 100, {
+    const formattedcustomerCommissionTotal = intl.formatNumber(customerCommissionTotal / 10, {
       style: 'currency',
       currency,
     });
@@ -98,8 +98,9 @@ export const OrderBreakdownComponent = props => {
   currency,
 });
  // Formatear los valores
- const formattedNetSubtotal = intl.formatNumber(netSubtotal / 100, { style: 'currency', currency });
+ var formattedNetSubtotal = intl.formatNumber(basePrice * 10 / 100 +  netSubtotal, { style: 'currency', currency });
   const classes = classNames(rootClassName || css.root, className);
+  var formattedNetSubtotal = intl.formatNumber(basePrice * 10 / 100 +  netSubtotal, { style: 'currency', currency });
   /**
    * OrderBreakdown contains different line items:
    *
@@ -200,7 +201,7 @@ export const OrderBreakdownComponent = props => {
             <div className={css.totalLabel}>
               <FormattedMessage id="OrderBreakdown.total" />
             </div>
-            <div className={css.totalPrice}>{formattedcustomerCommissionTotal}</div>
+            <div className={css.totalPrice}>{nettotal}</div>
           </div>
         </div>
       )}
@@ -211,11 +212,12 @@ export const OrderBreakdownComponent = props => {
         <hr className={css.totalDivider} />
               <div className={css.lineItemTotal}>
       <div className={css.totalLabel}><FormattedMessage id="OrderBreakdown.total" /></div>
-      <div className={css.totalPrice}>{nettotal}</div>
+      <div className={css.totalPrice}>{formattedcustomerCommissionTotal}</div>
     </div>
       </div>
       )}
-
+{/*   <LineItemTotalPrice transaction={transaction} isProvider={isProvider} intl={intl} />
+  <div className={css.totalPrice}>{formattedcustomerCommissionTotal}</div> */}
       {hasCommissionLineItem ? (
 
         <span className={css.feeInfo}>
