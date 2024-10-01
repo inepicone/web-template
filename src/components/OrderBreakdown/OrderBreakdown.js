@@ -98,9 +98,15 @@ export const OrderBreakdownComponent = props => {
   currency,
 });
  // Formatear los valores
- var formattedNetSubtotal = intl.formatNumber(basePrice * 10 / 100 +  netSubtotal, { style: 'currency', currency });
+ const formattedNetSubtotal = intl.formatNumber(basePrice * 10 / 100 +  netSubtotal, { style: 'currency', currency });
   const classes = classNames(rootClassName || css.root, className);
-  var formattedNetSubtotal = intl.formatNumber(basePrice * 10 / 100 +  netSubtotal, { style: 'currency', currency });
+  
+  const providerCommissionItem = lineItems.find(item => item.code === LINE_ITEM_PROVIDER_COMMISSION && !item.reversal);
+  const providerCommission = providerCommissionItem ? providerCommissionItem.lineTotal.amount : 0;
+
+  // Formatear la comisión del proveedor
+  const formattedProviderCommission = intl.formatNumber(providerCommission / 100, { style: 'currency', currency });
+
   /**
    * OrderBreakdown contains different line items:
    *
@@ -216,8 +222,15 @@ export const OrderBreakdownComponent = props => {
     </div>
       </div>
       )}
-{/*   <LineItemTotalPrice transaction={transaction} isProvider={isProvider} intl={intl} />
-  <div className={css.totalPrice}>{formattedcustomerCommissionTotal}</div> */}
+   <LineItemTotalPrice transaction={transaction} isProvider={isProvider} intl={intl} />
+ <div className={css.totalPrice}>{formattedcustomerCommissionTotal}</div> 
+ <div className={css.totalPrice}>{formattedNetSubtotal}</div> 
+ <div className={css.lineItem}>
+        <span className={css.itemLabel}>
+          <FormattedMessage id="OrderBreakdown.providerCommission" />
+        </span>
+        <span className={css.itemValue}>{formattedProviderCommission}</span>
+      </div>
       {hasCommissionLineItem ? (
 
         <span className={css.feeInfo}>
