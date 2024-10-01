@@ -221,16 +221,6 @@ export const OrderBreakdownComponent = props => {
       <div className={css.totalPrice}>{formattedcustomerCommissionTotal}</div>
     </div>
       </div>
-  
-   <LineItemTotalPrice transaction={transaction} isProvider={isProvider} intl={intl} />
- <div className={css.totalPrice}>{formattedcustomerCommissionTotal}</div> 
- <div className={css.totalPrice}>{formattedNetSubtotal}</div> 
- <div className={css.lineItem}>
-        <span className={css.itemLabel}>
-          <FormattedMessage id="OrderBreakdown.providerCommission" />
-        </span>
-        <span className={css.itemValue}>{formattedProviderCommission}</span>
-      </div>
       {hasCommissionLineItem ? (
 
         <span className={css.feeInfo}>
