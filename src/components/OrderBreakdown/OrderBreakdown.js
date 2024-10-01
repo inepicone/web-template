@@ -213,7 +213,7 @@ export const OrderBreakdownComponent = props => {
       )}
 
       {/* Ocultar el total de la orden si netSubtotal es 0 */}
-      {netSubtotal !== 0 && (
+     
         <div className={css.commissionLineItem}>
         <hr className={css.totalDivider} />
               <div className={css.lineItemTotal}>
@@ -221,7 +221,7 @@ export const OrderBreakdownComponent = props => {
       <div className={css.totalPrice}>{formattedcustomerCommissionTotal}</div>
     </div>
       </div>
-      )}
+  
    <LineItemTotalPrice transaction={transaction} isProvider={isProvider} intl={intl} />
  <div className={css.totalPrice}>{formattedcustomerCommissionTotal}</div> 
  <div className={css.totalPrice}>{formattedNetSubtotal}</div> 
