@@ -13,6 +13,8 @@ import {
   // import { cartTransactionLineItems } from '../../util/api';
   import { currentUserShowSuccess, fetchCurrentUser } from '../../ducks/user.duck';
   
+  import { cartTransactionLineItems } from '../../util/api';
+
   export const FETCH_LISTINGS_REQUEST = 'app/CartPage/FETCH_LISTINGS_REQUEST';
   export const FETCH_LISTINGS_SUCCESS = 'app/CartPage/FETCH_LISTINGS_SUCCESS';
   export const FETCH_LISTINGS_ERROR = 'app/CartPage/FETCH_LISTINGS_ERROR';

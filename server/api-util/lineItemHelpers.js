@@ -287,3 +287,13 @@ exports.hasCommissionPercentage = commission => {
   }
   return isDefined;
 };
+
+/**
+ * Return listing ids from a single vendor shopping cart, filtering
+ * out delivery method
+ * @param {*} cart 
+ * @returns 
+ */
+exports.getListingIdsFromCart = cart => {
+  return Object.keys(cart).filter(key => key !== 'deliveryMethod');
+};

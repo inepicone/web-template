@@ -41,9 +41,15 @@ export const OrderBreakdownComponent = props => {
   const isCustomer = userRole === 'customer';
   const isProvider = userRole === 'provider';
   const lineItems = transaction.attributes.lineItems;
-  const unitLineItem = lineItems?.find(
-    item => LISTING_UNIT_TYPES.includes(item.code) && !item.reversal
-  );
+  // Ine
+  //const unitLineItem = lineItems?.find(
+  //  item => LISTING_UNIT_TYPES.includes(item.code) && !item.reversal
+  //);
+  const unitLineItems = lineItems.filter(li => li.code === lineItemUnitType);
+  const basePrices = unitLineItems.map((uli, idx) => (
+    <LineItemBasePriceMaybe lineItems={[uli]} key={idx} code={lineItemUnitType} intl={intl} />
+  ));
+  // Fin ine
   // Line-item code that matches with base unit: day, night, hour, item
   const lineItemUnitType = unitLineItem?.code;
   // Calcula el subtotal y la comisión del cliente
@@ -106,7 +112,8 @@ export const OrderBreakdownComponent = props => {
         dateType={dateType}
         timeZone={timeZone}
       />
-      <LineItemBasePriceMaybe lineItems={lineItems} code={lineItemUnitType} intl={intl} />
+      {basePrices} 
+      
       <LineItemShippingFeeMaybe lineItems={lineItems} intl={intl} />
       <LineItemPickupFeeMaybe lineItems={lineItems} intl={intl} />
       <LineItemUnknownItemsMaybe lineItems={lineItems} isProvider={isProvider} intl={intl} />

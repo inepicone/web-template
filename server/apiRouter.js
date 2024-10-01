@@ -47,6 +47,8 @@ router.use((req, res, next) => {
   next();
 });
 
+const cartTransactionLineItems = require('./api/cart-transaction-line-items');
+
 // ================ API router endpoints: ================ //
 
 router.get('/initiate-login-as', initiateLoginAs);
@@ -79,5 +81,7 @@ router.get('/auth/google', authenticateGoogle);
 // with Google. In this route a Passport.js custom callback is used for calling
 // loginWithIdp endpoint in Sharetribe Auth API to authenticate user to the marketplace
 router.get('/auth/google/callback', authenticateGoogleCallback);
+
+router.post('/cart-transaction-line-items', cartTransactionLineItems);
 
 module.exports = router;

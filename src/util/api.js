@@ -144,3 +144,8 @@ export const transitionPrivileged = body => {
 export const createUserWithIdp = body => {
   return post('/api/auth/create-user-with-idp', body);
 };
+
+// Fetch cart transaction line items from the local API endpoint.
+export const cartTransactionLineItems = body => {
+  return post('/api/cart-transaction-line-items', body);
+};
