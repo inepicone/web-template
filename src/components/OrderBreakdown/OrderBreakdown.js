@@ -218,7 +218,7 @@ export const OrderBreakdownComponent = props => {
         <hr className={css.totalDivider} />
               <div className={css.lineItemTotal}>
       <div className={css.totalLabel}><FormattedMessage id="OrderBreakdown.total" /></div>
-      <div className={css.totalPrice}>{formattedcustomerCommissionTotal}</div>
+      <div className={css.totalPrice}>{nettotal}</div>
     </div>
       </div>
       {hasCommissionLineItem ? (
