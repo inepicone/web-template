@@ -55,12 +55,15 @@ export const OrderBreakdownComponent = props => {
     return sum + (item.lineTotal.amount || 0);
   }, 0);
 
+
   const customerCommission = lineItems.reduce((sum, item) => {
     return sum + (isCustomer && item.code === LINE_ITEM_CUSTOMER_COMMISSION && !item.reversal ? item.lineTotal.amount : 0);
   }, 0);
 
+
   /* nst netSubtotal = subtotal * 80 / 100; */
 /*   const nettotal = total / 100 ; */
+
 
   const hasCommissionLineItem = lineItems.find(item => {
     const hasCustomerCommission = isCustomer && item.code === LINE_ITEM_CUSTOMER_COMMISSION;
@@ -99,6 +102,7 @@ export const OrderBreakdownComponent = props => {
 });
  // Formatear los valores
  const formattedNetSubtotal = intl.formatNumber(basePrice * 10 / 100 +  netSubtotal, { style: 'currency', currency });
+
   const classes = classNames(rootClassName || css.root, className);
   
   const providerCommissionItem = lineItems.find(item => item.code === LINE_ITEM_PROVIDER_COMMISSION && !item.reversal);
@@ -171,6 +175,7 @@ export const OrderBreakdownComponent = props => {
         intl={intl}
         marketplaceCurrency={currency}
       />
+
       {/* <LineItemRefundMaybe lineItems={lineItems} intl={intl} marketplaceCurrency={currency} /> */}
  
       {/* Mostrar el total de la comisión del proveedor */}
@@ -179,8 +184,10 @@ export const OrderBreakdownComponent = props => {
         isCustomer={isCustomer}
         marketplaceName={marketplaceName}
         intl={intl}
+
       />
       {/*       <LineItemCustomerCommissionRefundMaybe
+
         lineItems={lineItems}
         isCustomer={isCustomer}
         marketplaceName={marketplaceName}
@@ -193,6 +200,7 @@ export const OrderBreakdownComponent = props => {
         intl={intl}
       />
       {/*       <LineItemProviderCommissionRefundMaybe
+
         lineItems={lineItems}
         isProvider={isProvider}
         marketplaceName={marketplaceName}
@@ -211,6 +219,7 @@ export const OrderBreakdownComponent = props => {
           </div>
         </div>
       )}
+
 
       {/* Ocultar el total de la orden si netSubtotal es 0 */}
      
