@@ -199,7 +199,21 @@ exports.calculateLineTotal = lineItem => {
     );
   }
 };
+exports.obtenerComisionCliente = publicData => {
+  try {
+    const userType = publicData.userType;
 
+    // Definir la comisión en base al tipo de usuario
+    if (userType === 'tienda') {
+      return { percentage: 10 }; // 10% para tiendas
+    } else {
+      return { percentage: 20}; // 20% para persona física
+    }
+  } catch (error) {
+    console.error('Error al obtener la comisión del Cliente:', error);
+    throw error;
+  }
+};
 /**
  * Calculates the total sum of lineTotals for given lineItems
  *
@@ -251,6 +265,7 @@ exports.calculateTotalForCustomer = lineItems => {
  *
  */
 exports.constructValidLineItems = lineItems => {
+
   const lineItemsWithTotals = lineItems.map(lineItem => {
     const { code, quantity, percentage } = lineItem;
 
@@ -279,11 +294,14 @@ exports.constructValidLineItems = lineItems => {
  * @returns boolean
  */
 exports.hasCommissionPercentage = commission => {
-  const percentage = commission.percentage;
+  const percentage = commission?.percentage;
   const isDefined = percentage != null;
   const isNumber = typeof percentage === 'number' && !isNaN(percentage);
   if (isDefined && !isNumber) {
     throw new Error(`${percentage} is not a number.`);
   }
-  return isDefined;
+
+  // Only create a line item if the percentage is set to be more than zero
+  const isMoreThanZero = percentage > 0;
+  return isDefined && isMoreThanZero;
 };

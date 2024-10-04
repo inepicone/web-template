@@ -152,8 +152,6 @@ exports.transactionLineItems = (listing, orderData, providerCommission, customer
   // day, night, hour or item
   const unitType = publicData.unitType;
   const code = `line-item/${unitType}`;
-  // Here "extra line-items" means line-items that are tied to unit type
-  // E.g. by default, "shipping-fee" is tied to 'item' aka buying products.
   const quantityAndExtraLineItems =
     unitType === 'item'
       ? getItemQuantityAndLineItems(orderData, publicData, currency)
