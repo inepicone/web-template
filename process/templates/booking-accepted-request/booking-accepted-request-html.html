@@ -35,7 +35,7 @@
                       <td>
                         <td style="text-align:right">
                           <p style="text-align:left;font-size:16px;line-height:1.4;margin:16px 0;color:#484848">{{t "BookingAcceptedRequest.BookingBreakdown" "Your card has been charged for {providerDisplayName} {currency}. Here's the booking breakdown." amount=payin-total.amount currency=payin-total.currency }}
-                             <!-- {{> format-money money=line-total}} --> <a target="_blank" style="color:#7cc9bc;text-decoration:none" href="{{marketplace.url}}/order/{{url-encode id}}/">aquí.</a> El importe debe ser transferido a la siguiente cuenta: 
+                             {{> format-money money=line-total}} <a target="_blank" style="color:#7cc9bc;text-decoration:none" href="{{marketplace.url}}/order/{{url-encode id}}/">aquí.</a> El importe debe ser transferido a la siguiente cuenta: 
                              <br>
                              <br>ALIAS: <span style="color:#7cc9bc">rundo.alquileres.mp</span>
                              <br>CBU: 0000003100011729313797
@@ -50,7 +50,7 @@
                   </tbody>
                 </table>
                 {{/eq}}{{/each}}               
-                 <!--  <table style="color:#484848;font-size:16px;line-height:1.4;background-color:#FFF;padding:8px 24px;border-radius:8px;border:1px solid;border-color:#E1E1E1;margin:24px 0" align="center" border="0" cellPadding="0" cellSpacing="0" role="presentation" width="100%">
+                  <table style="color:#484848;font-size:16px;line-height:1.4;background-color:#FFF;padding:8px 24px;border-radius:8px;border:1px solid;border-color:#E1E1E1;margin:24px 0" align="center" border="0" cellPadding="0" cellSpacing="0" role="presentation" width="100%">
                   <tbody>
                     <tr>
                       <td>  
@@ -286,7 +286,7 @@
                       </td>
                     </tr>
                   </tbody>
-                </table> -->
+                </table>
                 <table style="padding:16px 0 0" align="center" border="0" cellPadding="0" cellSpacing="0" role="presentation" width="100%">
                   <tbody>
                     <tr>
