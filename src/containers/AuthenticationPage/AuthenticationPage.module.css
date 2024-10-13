@@ -6,7 +6,7 @@
 
 .contentContainer {
   composes: marketplaceModalRootStyles from global;
-  height: calc(100vh - 60px);
+/*   height: calc(100vh - 60px); */
 
   @media (--viewportMedium) {
     height: unset;
