@@ -37,7 +37,7 @@ date=date}}{{/with}}{{~/inline~}}
                 "{customerDisplayName} requested to book {listingTitle} in {marketplaceName}."
                 customerDisplayName=customer.display-name listingTitle=listing.title marketplaceName=marketplace.name}}
               </p>
-              <!-- <table
+               <table
                 style="color:#484848;font-size:16px;line-height:1.4;background-color:#FFF;padding:8px 24px;border-radius:8px;border:1px solid;border-color:#E1E1E1;margin:24px 0"
                 align="center" border="0" cellPadding="0" cellSpacing="0" role="presentation" width="100%">
                 <tbody>
@@ -305,7 +305,7 @@ date=date}}{{/with}}{{~/inline~}}
   </tbody>
 </table>
 {{/eq}}
-{{#eq "line-item/provider-commission" code}}
+{{#eq "line-item/customer-commission" code}}
 <table align="center" border="0" cellPadding="0" cellSpacing="0" role="presentation" width="100%">
   <tbody>
     <tr>
@@ -343,7 +343,7 @@ date=date}}{{/with}}{{~/inline~}}
 </td>
 </tr>
 </tbody>
-</table> -->
+</table> 
 <p style="font-size:16px;line-height:1.4;margin:16px 0;color:#484848;font-weight:700">{{t "BookingNewRequest.AcceptText"
   "You need to accept the request by {date,date,::jmmYYYYMMMd}. Otherwise the request will expire automatically and you
   won't get paid." date=delayed-transition.run-at}}</p>
