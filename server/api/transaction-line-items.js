@@ -22,9 +22,9 @@ module.exports = (req, res) => {
     const { publicData } = author.attributes.profile;
     
     const customerCommission = obtenerComisionCliente(publicData);
-    
-    const { providerCommission } =
-    commissionAsset?.type === 'jsonAsset' ? commissionAsset.attributes.data : {};
+    const providerCommission = obtenerComisionCliente(publicData);
+/*     const { providerCommission } =
+    commissionAsset?.type === 'jsonAsset' ? commissionAsset.attributes.data : {}; */
     
     const lineItems = transactionLineItems(
     listing,
