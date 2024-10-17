@@ -20,36 +20,36 @@
           <table align="center" role="presentation" cellSpacing="0" cellPadding="0" border="0" width="100%" style="max-width:600px;margin:0 auto">
             <tr style="width:100%">
               <td>
-                <h1 style="color:#484848;font-size:26px;line-height:1.3;font-weight:700">{{t "BookingReminderEndProvider.Title" "You have been paid {amount,number,::.00} {currency}" amount=payin-total.amount currency=payin-total.currency}}</h1>
+                <h1 style="color:#484848;font-size:26px;line-height:1.3;font-weight:700">{{t "BookingReminderEndProvider.Title" "You have been paid {amount,number,::.00} {currency}" amount=payout-total.amount currency=payout-total.currency}}</h1>
                 {{#each tx-line-items}}{{#eq "line-item/hour" code}}
                 <p style="font-size:16px;line-height:1.4;margin:16px 0;color:#484848">
-                  {{t "BookingReminderEndProvider.ContentForHourly" "{customerDisplayName} We have sent you {amount,number,::.00} {currency} for the booking of {listingTitle} from {dateStart,date,::YYYYMMMd} to {dateEnd,date,::YYYYMMMd} by {customerDisplayName}. It might take up to 7 days for the money to reach your bank account." amount=payin-total.amount currency=payin-total.currency listingTitle=listing.title dateStart=booking.start dateEnd=booking.end customerDisplayName=customer.display-name providerDisplayName=provider.display-name}}
+                  {{t "BookingReminderEndProvider.ContentForHourly" "{customerDisplayName} We have sent you {amount,number,::.00} {currency} for the booking of {listingTitle} from {dateStart,date,::YYYYMMMd} to {dateEnd,date,::YYYYMMMd} by {customerDisplayName}. It might take up to 7 days for the money to reach your bank account." amount=payout-total.amount currency=payout-total.currency listingTitle=listing.title dateStart=booking.start dateEnd=booking.end customerDisplayName=customer.display-name providerDisplayName=provider.display-name}}
                 </p>
                 <p style="font-size:16px;line-height:1.4;margin:16px 0;color:#484848">
-                  {{t "BookingReminderEndProvider.ContentForHourly2" "No olvides escribirle a {customerDisplayName} para coordinar la devolución -horario y punto de encuentro-. Recordá verificar que todo esté en orden y si es así, debés reembolsar el depósito en garantía de la manera previamente convenida." amount=payin-total.amount currency=payin-total.currency listingTitle=listing.title dateStart=booking.start dateEnd=booking.end customerDisplayName=customer.display-name providerDisplayName=provider.display-name}}
+                  {{t "BookingReminderEndProvider.ContentForHourly2" "No olvides escribirle a {customerDisplayName} para coordinar la devolución -horario y punto de encuentro-. Recordá verificar que todo esté en orden y si es así, debés reembolsar el depósito en garantía de la manera previamente convenida." amount=payout-total.amount currency=payout-total.currency listingTitle=listing.title dateStart=booking.start dateEnd=booking.end customerDisplayName=customer.display-name providerDisplayName=provider.display-name}}
                 </p>
                 <p style="font-size:16px;line-height:1.4;margin:16px 0;color:#484848">
-                  {{t "BookingReminderEndProvider.ContentForHourly3" "Al finalizar, te llegará un e-mail para que califiques tu experiencia ⭐⭐⭐⭐⭐." amount=payin-total.amount currency=payin-total.currency listingTitle=listing.title dateStart=booking.start dateEnd=booking.end customerDisplayName=customer.display-name providerDisplayName=provider.display-name}}
+                  {{t "BookingReminderEndProvider.ContentForHourly3" "Al finalizar, te llegará un e-mail para que califiques tu experiencia ⭐⭐⭐⭐⭐." amount=payout-total.amount currency=payout-total.currency listingTitle=listing.title dateStart=booking.start dateEnd=booking.end customerDisplayName=customer.display-name providerDisplayName=provider.display-name}}
                 </p>
                    {{/ eq}}{{#eq "line-item/day" code}}
                 <p style="font-size:16px;line-height:1.4;margin:16px 0;color:#484848">
-                  {{t "BookingReminderEndProvider.ContentForDaily" "{customerDisplayName} We have sent you {amount,number,::.00} {currency} for the booking of {listingTitle} from {dateStart,date,::YYYYMMMd} to {dateEnd,date,::YYYYMMMd} by {customerDisplayName}. It might take up to 7 days for the money to reach your bank account." amount=payin-total.amount currency=payin-total.currency listingTitle=listing.title dateStart=booking.start dateEnd=booking.end customerDisplayName=customer.display-name providerDisplayName=provider.display-name}}
+                  {{t "BookingReminderEndProvider.ContentForDaily" "{customerDisplayName} We have sent you {amount,number,::.00} {currency} for the booking of {listingTitle} from {dateStart,date,::YYYYMMMd} to {dateEnd,date,::YYYYMMMd} by {customerDisplayName}. It might take up to 7 days for the money to reach your bank account." amount=payout-total.amount currency=payout-total.currency listingTitle=listing.title dateStart=booking.start dateEnd=booking.end customerDisplayName=customer.display-name providerDisplayName=provider.display-name}}
                 </p>
                 <p style="font-size:16px;line-height:1.4;margin:16px 0;color:#484848">
-                  {{t "BookingReminderEndProvider.ContentForDaily2" "No olvides escribirle a {customerDisplayName} para coordinar la devolución -horario y punto de encuentro-. Recordá verificar que todo esté en orden y si es así, debés reembolsar el depósito en garantía de la manera previamente convenida." amount=payin-total.amount currency=payin-total.currency listingTitle=listing.title dateStart=booking.start dateEnd=booking.end customerDisplayName=customer.display-name providerDisplayName=provider.display-name}}
+                  {{t "BookingReminderEndProvider.ContentForDaily2" "No olvides escribirle a {customerDisplayName} para coordinar la devolución -horario y punto de encuentro-. Recordá verificar que todo esté en orden y si es así, debés reembolsar el depósito en garantía de la manera previamente convenida." amount=payout-total.amount currency=payout-total.currency listingTitle=listing.title dateStart=booking.start dateEnd=booking.end customerDisplayName=customer.display-name providerDisplayName=provider.display-name}}
                 </p>
                 <p style="font-size:16px;line-height:1.4;margin:16px 0;color:#484848">
-                  {{t "BookingReminderEndProvider.ContentForDaily3" "Al finalizar, te llegará un e-mail para que califiques tu experiencia ⭐⭐⭐⭐⭐." amount=payin-total.amount currency=payin-total.currency listingTitle=listing.title dateStart=booking.start dateEnd=booking.end customerDisplayName=customer.display-name providerDisplayName=provider.display-name}}
+                  {{t "BookingReminderEndProvider.ContentForDaily3" "Al finalizar, te llegará un e-mail para que califiques tu experiencia ⭐⭐⭐⭐⭐." amount=payout-total.amount currency=payout-total.currency listingTitle=listing.title dateStart=booking.start dateEnd=booking.end customerDisplayName=customer.display-name providerDisplayName=provider.display-name}}
                 </p>
                   {{/ eq}}{{#eq "line-item/night" code}}
                 <p style="font-size:16px;line-height:1.4;margin:16px 0;color:#484848">
-                  {{t "BookingReminderEndProvider.ContentForNightly" "{customerDisplayName} We have sent you {amount,number,::.00} {currency} for the booking of {listingTitle} from {dateStart,date,::YYYYMMMd} to {dateEnd,date,::YYYYMMMd} by {customerDisplayName}. It might take up to 7 days for the money to reach your bank account." amount=payin-total.amount currency=payin-total.currency listingTitle=listing.title dateStart=booking.start dateEnd=booking.end customerDisplayName=customer.display-name providerDisplayName=provider.display-name}}
+                  {{t "BookingReminderEndProvider.ContentForNightly" "{customerDisplayName} We have sent you {amount,number,::.00} {currency} for the booking of {listingTitle} from {dateStart,date,::YYYYMMMd} to {dateEnd,date,::YYYYMMMd} by {customerDisplayName}. It might take up to 7 days for the money to reach your bank account." amount=payout-total.amount currency=payout-total.currency listingTitle=listing.title dateStart=booking.start dateEnd=booking.end customerDisplayName=customer.display-name providerDisplayName=provider.display-name}}
                 </p>
                 <p style="font-size:16px;line-height:1.4;margin:16px 0;color:#484848">
-                  {{t "BookingReminderEndProvider.ContentForNightly2" "No olvides escribirle a {customerDisplayName} para coordinar la devolución -horario y punto de encuentro-. Recordá verificar que todo esté en orden y si es así, debés reembolsar el depósito en garantía de la manera previamente convenida." amount=payin-total.amount currency=payin-total.currency listingTitle=listing.title dateStart=booking.start dateEnd=booking.end customerDisplayName=customer.display-name providerDisplayName=provider.display-name}}
+                  {{t "BookingReminderEndProvider.ContentForNightly2" "No olvides escribirle a {customerDisplayName} para coordinar la devolución -horario y punto de encuentro-. Recordá verificar que todo esté en orden y si es así, debés reembolsar el depósito en garantía de la manera previamente convenida." amount=payout-total.amount currency=payout-total.currency listingTitle=listing.title dateStart=booking.start dateEnd=booking.end customerDisplayName=customer.display-name providerDisplayName=provider.display-name}}
                 </p>
                 <p style="font-size:16px;line-height:1.4;margin:16px 0;color:#484848">
-                  {{t "BookingReminderEndProvider.ContentForNightly3" "Al finalizar, te llegará un e-mail para que califiques tu experiencia ⭐⭐⭐⭐⭐." amount=payin-total.amount currency=payin-total.currency listingTitle=listing.title dateStart=booking.start dateEnd=booking.end customerDisplayName=customer.display-name providerDisplayName=provider.display-name}}
+                  {{t "BookingReminderEndProvider.ContentForNightly3" "Al finalizar, te llegará un e-mail para que califiques tu experiencia ⭐⭐⭐⭐⭐." amount=payout-total.amount currency=payout-total.currency listingTitle=listing.title dateStart=booking.start dateEnd=booking.end customerDisplayName=customer.display-name providerDisplayName=provider.display-name}}
                 </p>
                 {{/ eq}}{{/each}}
                 <p style="font-size:16px;line-height:1.4;margin:16px 0;color:#484848">{{t "BookingReminderEndProvider.BookingBreakdownTitle" "Here's the booking breakdown."}}</p>
@@ -273,7 +273,7 @@
          </tbody>
        </table>
        {{/eq}}
-       {{#eq "line-item/customer-commission" code}}
+       {{#eq "line-item/provider-commission" code}}
                         <table align="center" border="0" cellPadding="0" cellSpacing="0" role="presentation" width="100%">
                           <tbody>
                             <tr>
@@ -298,7 +298,7 @@
                                   <p style="font-size:16px;line-height:1.4;margin:16px 0;color:#484848;margin-top:1px;font-weight:700">{{t "BookingReminderEndProvider.PayoutLabel" "You'll earn"}}</p>
                                 </td>
                                 <td style="text-align:right">
-                                  <p style="font-size:16px;line-height:1.4;margin:16px 0;color:#484848;margin-top:1px;font-weight:700">{{> format-money money=payin-total}}</p>
+                                  <p style="font-size:16px;line-height:1.4;margin:16px 0;color:#484848;margin-top:1px;font-weight:700">{{> format-money money=payout-total}}</p>
                                 </td>
                               </td>
                             </tr>
