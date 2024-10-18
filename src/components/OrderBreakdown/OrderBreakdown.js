@@ -1,22 +1,11 @@
-/**
- * This component will show the booking info and calculated total price.
- * I.e. dates and other details related to payment decision in receipt format.
- */
 import React from 'react';
 import { oneOf, string } from 'prop-types';
 import classNames from 'classnames';
-
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
-import {
-  propTypes,
-  LISTING_UNIT_TYPES,
-  LINE_ITEM_CUSTOMER_COMMISSION,
-  LINE_ITEM_PROVIDER_COMMISSION,
-} from '../../util/types';
+import { propTypes, LISTING_UNIT_TYPES, LINE_ITEM_CUSTOMER_COMMISSION, LINE_ITEM_PROVIDER_COMMISSION } from '../../util/types';
 
 import LineItemBookingPeriod from './LineItemBookingPeriod';
 import LineItemBasePriceMaybe from './LineItemBasePriceMaybe';
-import LineItemSubTotalMaybe from './LineItemSubTotalMaybe';
 import LineItemShippingFeeMaybe from './LineItemShippingFeeMaybe';
 import LineItemPickupFeeMaybe from './LineItemPickupFeeMaybe';
 import LineItemCustomerCommissionMaybe from './LineItemCustomerCommissionMaybe';
@@ -46,14 +35,11 @@ export const OrderBreakdownComponent = props => {
   const isCustomer = userRole === 'customer';
   const isProvider = userRole === 'provider';
   const allLineItems = transaction.attributes.lineItems || [];
-  // We'll show only line-items that are specific for the current userRole (customer vs provider)
   const lineItems = allLineItems.filter(lineItem => lineItem.includeFor.includes(userRole));
-  const unitLineItem = lineItems.find(
-    item => LISTING_UNIT_TYPES.includes(item.code) && !item.reversal
-  );
-  // Line-item code that matches with base unit: day, night, hour, item
+  const unitLineItem = lineItems.find(item => LISTING_UNIT_TYPES.includes(item.code) && !item.reversal);
   const lineItemUnitType = unitLineItem?.code;
 
+  // Filter commission line items
   const hasCommissionLineItem = lineItems.find(item => {
     const hasCustomerCommission = isCustomer && item.code === LINE_ITEM_CUSTOMER_COMMISSION;
     const hasProviderCommission = isProvider && item.code === LINE_ITEM_PROVIDER_COMMISSION;
@@ -61,42 +47,37 @@ export const OrderBreakdownComponent = props => {
   });
 
   const classes = classNames(rootClassName || css.root, className);
+  console.log('Line Items:', lineItems);
 
-  /**
-   * OrderBreakdown contains different line items:
-   *
-   * LineItemBookingPeriod: prints booking start and booking end types. Prop dateType
-   * determines if the date and time or only the date is shown
-   *
-   * LineItemShippingFeeMaybe: prints the shipping fee (combining additional fee of
-   * additional items into it).
-   *
-   * LineItemShippingFeeRefundMaybe: prints the amount of refunded shipping fee
-   *
-   * LineItemBasePriceMaybe: prints the base price calculation for the listing, e.g.
-   * "$150.00 * 2 nights $300"
-   *
-   * LineItemUnknownItemsMaybe: prints the line items that are unknown. In ideal case there
-   * should not be unknown line items. If you are using custom pricing, you should create
-   * new custom line items if you need them.
-   *
-   * LineItemSubTotalMaybe: prints subtotal of line items before possible
-   * commission or refunds
-   *
-   * LineItemRefundMaybe: prints the amount of refund
-   *
-   * LineItemCustomerCommissionMaybe: prints the amount of customer commission
-   * The default transaction process used by this template doesn't include the customer commission.
-   *
-   * LineItemCustomerCommissionRefundMaybe: prints the amount of refunded customer commission
-   *
-   * LineItemProviderCommissionMaybe: prints the amount of provider commission
-   *
-   * LineItemProviderCommissionRefundMaybe: prints the amount of refunded provider commission
-   *
-   * LineItemTotalPrice: prints total price of the transaction
-   *
-   */
+// Buscar el item con el código 'line-item/day' para obtener el precio base
+const basePriceLineItem = lineItems.find(item => item.code === 'line-item/day');
+const basePrice = basePriceLineItem ? basePriceLineItem.lineTotal.amount / 100 : 0;
+
+
+// Sumar todos los montos de los line items (que no sean reversals)
+const totalPrice = lineItems
+  .filter(item => !item.reversal)
+  .reduce((total, item) => total + item.lineTotal.amount / 100, 0);
+
+
+  // Get subtotal and commission information
+  const subTotalLineItems = lineItems.filter(item => !item.reversal && item.code !== LINE_ITEM_CUSTOMER_COMMISSION && item.code !== LINE_ITEM_PROVIDER_COMMISSION);
+  const subTotal = subTotalLineItems.reduce((total, item) => total + item.lineTotal.amount / 100, 0); // Calculate subtotal in main currency units
+  const commission = hasCommissionLineItem ? hasCommissionLineItem.lineTotal.amount / 100 : 0;
+  console.log('Line Items:', lineItems);
+
+  // Check if the commission is 10% or if totalPrice is 90% of basePrice
+  const isTenPercentCommission = commission === subTotal * 0.1;
+  const isTotalPrice90PercentOfBase = totalPrice === basePrice * 0.9;
+console.log(commission);
+console.log(totalPrice);
+console.log(basePrice);
+
+
+  // Adjusted subtotal (90% or 80% depending on the commission or total price condition)
+  const adjustedSubTotal = isTenPercentCommission || isTotalPrice90PercentOfBase ? subTotal * 0.9 : subTotal * 0.8;
+  const formattedSubTotal = intl.formatNumber(adjustedSubTotal, { style: 'currency', currency: currency });
+console.log(formattedSubTotal);
 
   return (
     <div className={classes}>
@@ -112,13 +93,14 @@ export const OrderBreakdownComponent = props => {
       <LineItemPickupFeeMaybe lineItems={lineItems} intl={intl} />
       <LineItemUnknownItemsMaybe lineItems={lineItems} isProvider={isProvider} intl={intl} />
 
-      <LineItemSubTotalMaybe
-        lineItems={lineItems}
-        code={lineItemUnitType}
-        userRole={userRole}
-        intl={intl}
-        marketplaceCurrency={currency}
-      />
+      <hr className={css.totalDivider} />
+      <div className={css.subTotalLineItem}>
+        <span className={css.itemLabel}>
+          <FormattedMessage id="OrderBreakdown.subTotal" />
+        </span>
+        <span className={css.itemValue}>{formattedSubTotal}</span>
+      </div>
+
       <LineItemRefundMaybe lineItems={lineItems} intl={intl} marketplaceCurrency={currency} />
 
       <LineItemCustomerCommissionMaybe
@@ -168,19 +150,16 @@ OrderBreakdownComponent.defaultProps = {
 OrderBreakdownComponent.propTypes = {
   rootClassName: string,
   className: string,
-
   marketplaceName: string.isRequired,
   userRole: oneOf(['customer', 'provider']).isRequired,
   transaction: propTypes.transaction.isRequired,
   booking: propTypes.booking,
   dateType: propTypes.dateType,
-
-  // from injectIntl
   intl: intlShape.isRequired,
 };
 
 const OrderBreakdown = injectIntl(OrderBreakdownComponent);
- 
+
 OrderBreakdown.displayName = 'OrderBreakdown';
 
 export default OrderBreakdown;
